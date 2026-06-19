@@ -4,7 +4,7 @@ import { useLang, type Lang } from '../i18n'
 function Brand({ className = '' }: { className?: string }) {
   return (
     <a href="#top" aria-label="Tedy Style" className={`inline-flex items-center gap-2.5 ${className}`}>
-      <img src="/logo.png" alt="Tedy Style" className="h-[38px] w-[38px] rounded-[10px] shadow-soft" />
+      <img src="/logo.svg" alt="Tedy Style" className="h-[38px] w-[38px] rounded-[10px] shadow-soft" />
       <span className="brand-word text-[21px] font-black -tracking-[0.02em] text-orange-dark">
         Tedy<span className="ml-px font-bold italic text-orange">style</span>
       </span>

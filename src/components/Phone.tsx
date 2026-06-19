@@ -137,17 +137,6 @@ export function HomeScreen() {
           </button>
         </div>
       </div>
-
-      <div className="mt-3 grid grid-cols-4 gap-[9px]">
-        {['👗', '👜', '🧢', '🕶️'].map((e, i) => (
-          <div
-            key={i}
-            className="grid aspect-square place-items-center rounded-xl border border-hair bg-white text-[22px] shadow-soft"
-          >
-            {e}
-          </div>
-        ))}
-      </div>
     </>
   )
 }

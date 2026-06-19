@@ -10,7 +10,7 @@ export default function DownloadCTA() {
         <Reveal className="relative mx-auto max-w-[860px] overflow-hidden rounded-5xl border border-hair bg-[linear-gradient(160deg,#FFF4EC,#FFF8F3)] px-8 py-16 text-center shadow-card">
           <div className="pointer-events-none absolute inset-x-[-10%] bottom-[-60%] h-80 bg-grad-peach" />
           <img
-            src="/logo.png"
+            src="/logo.svg"
             alt=""
             aria-hidden="true"
             className="relative z-10 mx-auto mb-[22px] h-16 w-16 rounded-2xl shadow-soft"
