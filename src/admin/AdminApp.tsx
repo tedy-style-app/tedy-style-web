@@ -5,15 +5,17 @@ import Dashboard from './pages/Dashboard'
 import Users from './pages/Users'
 import Transactions from './pages/Transactions'
 import Support from './pages/Support'
+import Notifications from './pages/Notifications'
 import Cms from './pages/Cms'
 
-type Section = 'dashboard' | 'users' | 'transactions' | 'support' | 'cms'
+type Section = 'dashboard' | 'users' | 'transactions' | 'support' | 'notifications' | 'cms'
 
 const NAV: { key: Section; label: string; icon: string }[] = [
   { key: 'dashboard', label: 'Дашборд', icon: '▚' },
   { key: 'users', label: 'Пользователи', icon: '☺' },
   { key: 'transactions', label: 'Транзакции', icon: '▤' },
   { key: 'support', label: 'Поддержка', icon: '✉' },
+  { key: 'notifications', label: 'Уведомления', icon: '🔔' },
   { key: 'cms', label: 'CMS', icon: '✎' },
 ]
 
@@ -97,6 +99,7 @@ export default function AdminApp() {
           {section === 'users' && <Users />}
           {section === 'transactions' && <Transactions />}
           {section === 'support' && <Support />}
+          {section === 'notifications' && <Notifications />}
           {section === 'cms' && <Cms />}
         </main>
       </div>

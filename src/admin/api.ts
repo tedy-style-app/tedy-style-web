@@ -166,6 +166,25 @@ export interface Cms {
   updatedAt?: string
 }
 
+export type NotifAudience = 'all' | 'free' | 'pro' | 'max'
+
+export interface AdminNotification {
+  id: string
+  title: string
+  body: string
+  audience: string
+  deepLink: string | null
+  sentCount: number
+  createdAt: string
+}
+
+export interface SendNotification {
+  title: string
+  body: string
+  audience: NotifAudience
+  deepLink?: string
+}
+
 // ---- Endpoints ----------------------------------------------------------
 
 export const api = {
@@ -188,6 +207,10 @@ export const api = {
   cms: () => request<Cms>('/cms'),
   saveCms: (systemPrompt: string) =>
     request<Cms>('/cms', { method: 'PUT', body: { systemPrompt } }),
+  notifications: (page: number, pageSize = 20) =>
+    request<Paged<AdminNotification>>(`/notifications?page=${page}&pageSize=${pageSize}`),
+  sendNotification: (payload: SendNotification) =>
+    request<AdminNotification>('/notifications', { method: 'POST', body: payload }),
 }
 
 // Absolute URL for a possibly-relative stored image path.
