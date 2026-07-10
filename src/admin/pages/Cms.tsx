@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { api } from '../api'
 import { PageHeader, Spinner, ErrorState, Card } from '../ui'
 
-type Tab = 'chat' | 'outfit'
+type Tab = 'chat' | 'outfit' | 'enhance'
 
 const TABS: { key: Tab; label: string; title: string; hint: string }[] = [
   {
@@ -17,13 +17,20 @@ const TABS: { key: Tab; label: string; title: string; hint: string }[] = [
     title: 'Промпт генерации образа',
     hint: 'Управляет тем, как AI собирает ежедневный образ из гардероба пользователя.',
   },
+  {
+    key: 'enhance',
+    label: 'Обработка фото',
+    title: 'Промпт вырезки одежды из фото',
+    hint: 'Master-бриф: как AI вырезает вещь из фото (убирает человека и фон, ставит на белый). Применяется при загрузке новой одежды.',
+  },
 ]
 
 export default function Cms() {
   const [tab, setTab] = useState<Tab>('chat')
   const [system, setSystem] = useState('')
   const [outfit, setOutfit] = useState('')
-  const [initial, setInitial] = useState({ system: '', outfit: '' })
+  const [enhance, setEnhance] = useState('')
+  const [initial, setInitial] = useState({ system: '', outfit: '', enhance: '' })
   const [state, setState] = useState<'loading' | 'error' | 'ready'>('loading')
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
@@ -33,9 +40,15 @@ export default function Cms() {
     api
       .cms()
       .then((c) => {
-        setSystem(c.systemPrompt ?? '')
-        setOutfit(c.outfitPrompt ?? '')
-        setInitial({ system: c.systemPrompt ?? '', outfit: c.outfitPrompt ?? '' })
+        const next = {
+          system: c.systemPrompt ?? '',
+          outfit: c.outfitPrompt ?? '',
+          enhance: c.enhancePrompt ?? '',
+        }
+        setSystem(next.system)
+        setOutfit(next.outfit)
+        setEnhance(next.enhance)
+        setInitial(next)
         setState('ready')
       })
       .catch(() => setState('error'))
@@ -47,8 +60,12 @@ export default function Cms() {
     setSaving(true)
     setSaved(false)
     try {
-      const c = await api.saveCms(system, outfit)
-      setInitial({ system: c.systemPrompt ?? system, outfit: c.outfitPrompt ?? outfit })
+      const c = await api.saveCms(system, outfit, enhance)
+      setInitial({
+        system: c.systemPrompt ?? system,
+        outfit: c.outfitPrompt ?? outfit,
+        enhance: c.enhancePrompt ?? enhance,
+      })
       setSaved(true)
       setTimeout(() => setSaved(false), 2500)
     } catch {
@@ -58,12 +75,20 @@ export default function Cms() {
     }
   }
 
-  const dirty = system !== initial.system || outfit !== initial.outfit
+  const values: Record<Tab, string> = { chat: system, outfit, enhance }
+  const setters: Record<Tab, (v: string) => void> = {
+    chat: setSystem,
+    outfit: setOutfit,
+    enhance: setEnhance,
+  }
+  const initials: Record<Tab, string> = {
+    chat: initial.system,
+    outfit: initial.outfit,
+    enhance: initial.enhance,
+  }
+  const dirty = (Object.keys(values) as Tab[]).some((k) => values[k] !== initials[k])
   const active = TABS.find((t) => t.key === tab)!
-  const value = tab === 'chat' ? system : outfit
-  const setValue = tab === 'chat' ? setSystem : setOutfit
-  const tabDirty = (t: Tab) =>
-    t === 'chat' ? system !== initial.system : outfit !== initial.outfit
+  const value = values[tab]
 
   return (
     <div>
@@ -89,7 +114,7 @@ export default function Cms() {
       {state === 'ready' && (
         <Card>
           {/* Tabs */}
-          <div className="mb-4 flex gap-2">
+          <div className="mb-4 flex flex-wrap gap-2">
             {TABS.map((t) => (
               <button
                 key={t.key}
@@ -99,7 +124,7 @@ export default function Cms() {
                 }`}
               >
                 {t.label}
-                {tabDirty(t.key) && (
+                {values[t.key] !== initials[t.key] && (
                   <span className="h-1.5 w-1.5 rounded-full bg-gold" title="Есть несохранённые изменения" />
                 )}
               </button>
@@ -110,7 +135,7 @@ export default function Cms() {
           <p className="mb-3 mt-1 text-[13px] font-medium text-ink-2">{active.hint}</p>
           <textarea
             value={value}
-            onChange={(e) => setValue(e.target.value)}
+            onChange={(e) => setters[tab](e.target.value)}
             spellCheck={false}
             className="min-h-[420px] w-full resize-y rounded-2xl border border-line bg-cream p-4 font-mono text-[13px] leading-relaxed text-ink outline-none focus:border-gold-soft"
           />
