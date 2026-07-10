@@ -18,7 +18,7 @@ Deploy the contents of `dist/` as the site root.
   `public/_redirects`) does it: `/*  /index.html  200`.
 - **Vercel** — `vercel.json` (repo root) rewrites non-asset paths to
   `/index.html`.
-- **nginx** (e.g. same box as `tedy.nashir.uz`):
+- **nginx** (e.g. same box as `sevil.app`):
 
   ```nginx
   server {
@@ -50,7 +50,7 @@ Deploy the contents of `dist/` as the site root.
 
 ## Notes
 
-- The admin panel calls `https://tedy.nashir.uz/api/admin/*`; make sure that
-  backend is deployed and CORS allows `https://sevil.app`.
+- The admin panel calls `https://sevil.app/api/admin/*` (same origin); make sure
+  the backend is deployed and CORS allows `https://sevil.app`.
 - Replace `TEAMID` in `public/.well-known/apple-app-site-association` with the
   real Apple Team ID before relying on https universal links.
