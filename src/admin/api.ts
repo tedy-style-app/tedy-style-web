@@ -163,6 +163,8 @@ export interface Feedback {
 
 export interface Cms {
   systemPrompt: string
+  outfitPrompt: string
+  enhancePrompt: string
   updatedAt?: string
 }
 
@@ -205,8 +207,11 @@ export const api = {
   updateFeedback: (id: string, status: string) =>
     request<Feedback>(`/feedback/${id}`, { method: 'PATCH', body: { status } }),
   cms: () => request<Cms>('/cms'),
-  saveCms: (systemPrompt: string) =>
-    request<Cms>('/cms', { method: 'PUT', body: { systemPrompt } }),
+  saveCms: (systemPrompt: string, outfitPrompt: string, enhancePrompt: string) =>
+    request<Cms>('/cms', {
+      method: 'PUT',
+      body: { systemPrompt, outfitPrompt, enhancePrompt },
+    }),
   notifications: (page: number, pageSize = 20) =>
     request<Paged<AdminNotification>>(`/notifications?page=${page}&pageSize=${pageSize}`),
   sendNotification: (payload: SendNotification) =>
