@@ -1,0 +1,13 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "TEAMID.uz.tedy.teddyMobile",
+        "paths": [
+          "/s/*"
+        ]
+      }
+    ]
+  }
+}
