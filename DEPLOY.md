@@ -50,12 +50,7 @@ Deploy the contents of `dist/` as the site root.
 
 ## Notes
 
-<<<<<<< HEAD
-- The admin panel calls `https://sevil.app/api/admin/*`; make sure that
-  backend is deployed and CORS allows `https://sevil.app`.
-=======
 - The admin panel calls `https://sevil.app/api/admin/*` (same origin); make sure
   the backend is deployed and CORS allows `https://sevil.app`.
->>>>>>> ffb6f40760d5ee3a7a8b5dba42bc1073d4b6defa
 - Replace `TEAMID` in `public/.well-known/apple-app-site-association` with the
   real Apple Team ID before relying on https universal links.
