@@ -1,0 +1,23 @@
+# Netlify build + SPA fallback for the Vite single-page app.
+# Client routes (/admin, /s/<id>) must fall through to index.html.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# Serve the deep-link association files with a JSON content type.
+[[headers]]
+  for = "/.well-known/apple-app-site-association"
+  [headers.values]
+    Content-Type = "application/json"
+
+[[headers]]
+  for = "/.well-known/assetlinks.json"
+  [headers.values]
+    Content-Type = "application/json"
+
+# SPA fallback — anything not a real file serves index.html (200, not 301).
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
