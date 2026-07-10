@@ -94,7 +94,7 @@ export default function ShareItem({ id }: { id: string }) {
 
   // Reflect the item name in the tab title.
   useEffect(() => {
-    if (item?.name) document.title = `${item.name} — Tedy`
+    if (item?.name) document.title = `${item.name} — Sevil`
   }, [item])
 
   // Attempt a silent deep-link once on first load (no store fallback here —
@@ -137,11 +137,11 @@ export default function ShareItem({ id }: { id: string }) {
       >
         <img
           src="/logo.svg"
-          alt="Tedy"
+          alt="Sevil"
           className="h-9 w-9 rounded-[10px] shadow-soft"
         />
         <span className="text-[19px] font-black -tracking-[0.02em] text-espresso">
-          Tedy
+          Sevil
         </span>
       </a>
 
@@ -188,7 +188,7 @@ function ErrorCard({ onOpenApp }: { onOpenApp: () => void }) {
       </h1>
       <p className="mx-auto mt-3 max-w-[320px] text-[15px] font-medium text-ink-2">
         Возможно, вещь уже отдали или ссылка устарела. Загляните в приложение
-        Tedy — там всегда есть свежие вещи даром.
+        Sevil — там всегда есть свежие вещи даром.
       </p>
       <div className="mt-7 flex flex-col gap-3">
         <button
@@ -288,7 +288,7 @@ function ItemCard({
             🔒
           </span>
           <p className="text-[14px] font-semibold text-ink-2">
-            Контакты владельца доступны только в приложении Tedy — откройте
+            Контакты владельца доступны только в приложении Sevil — откройте
             вещь там, чтобы договориться.
           </p>
         </div>

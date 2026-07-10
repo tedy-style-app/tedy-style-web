@@ -34,7 +34,7 @@ export default function MagicMoment() {
                 ✦
               </span>
               <div className="leading-tight">
-                <div className="text-[15px] font-black text-ink">Tedy</div>
+                <div className="text-[15px] font-black text-ink">Sevil</div>
                 <div className="text-[12px] font-bold text-online">● online</div>
               </div>
             </div>
@@ -46,7 +46,7 @@ export default function MagicMoment() {
               </div>
             </div>
 
-            {/* Tedy reply */}
+            {/* Sevil reply */}
             <div className="flex justify-start">
               <div className="max-w-[86%] rounded-[20px] rounded-tl-md bg-beige-soft px-4 py-3 text-[14px] font-medium leading-relaxed text-ink">
                 {t.ai.chatReply}

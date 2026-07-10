@@ -3,10 +3,10 @@ import { useLang, type Lang } from '../i18n'
 
 function Brand({ className = '' }: { className?: string }) {
   return (
-    <a href="#top" aria-label="Tedy" className={`inline-flex items-center gap-2.5 ${className}`}>
-      <img src="/logo.svg" alt="Tedy" className="h-[38px] w-[38px] rounded-[11px] shadow-soft" />
+    <a href="#top" aria-label="Sevil" className={`inline-flex items-center gap-2.5 ${className}`}>
+      <img src="/logo.svg" alt="Sevil" className="h-[38px] w-[38px] rounded-[11px] shadow-soft" />
       <span className="brand-word text-[21px] font-black -tracking-[0.02em] text-espresso">
-        Tedy
+        Sevil
       </span>
     </a>
   )

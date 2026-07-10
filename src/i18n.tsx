@@ -85,7 +85,7 @@ const ru: Translation = {
   hero: {
     eyebrow: 'AI-СТИЛИСТ',
     title: 'Твой стилист. Каждое утро — готовый образ.',
-    sub: 'Сфотографируй свой гардероб — Tedy соберёт идеальный образ под погоду, повод и твой вкус. Каждый день, в одно касание.',
+    sub: 'Сфотографируй свой гардероб — Sevil соберёт идеальный образ под погоду, повод и твой вкус. Каждый день, в одно касание.',
     trust: 'Бесплатно · Вход через Google или Apple',
   },
   store: {
@@ -102,7 +102,7 @@ const ru: Translation = {
     items: [
       {
         icon: '✦',
-        title: 'AI-стилист Tedy',
+        title: 'AI-стилист Sevil',
         body: 'Напиши «что надеть сегодня?» — и получи образ, собранный из твоих вещей. Живой чат на твоём языке.',
       },
       {
@@ -146,14 +146,14 @@ const ru: Translation = {
       },
       {
         title: 'Получай образы',
-        body: 'Каждый день — готовый лук, а Tedy всегда на связи в чате.',
+        body: 'Каждый день — готовый лук, а Sevil всегда на связи в чате.',
       },
     ],
   },
   ai: {
     eyebrow: 'AI-СТИЛИСТ',
     title: 'Спроси — и получи готовый образ.',
-    body: 'Tedy — личный стилист в кармане. Напиши обычными словами, что нужно, — и он соберёт образ из твоего гардероба с учётом погоды, повода и твоего вкуса.',
+    body: 'Sevil — личный стилист в кармане. Напиши обычными словами, что нужно, — и он соберёт образ из твоего гардероба с учётом погоды, повода и твоего вкуса.',
     checks: [
       'Отвечает на твоём языке',
       'Собирает образ из твоих вещей',
@@ -162,7 +162,7 @@ const ru: Translation = {
     chatUser: 'Что надеть сегодня?',
     chatReply:
       'Сегодня в Ташкенте прохладно. Предлагаю: бежевый свитер, тёмные джинсы, белые кроссовки и лёгкую куртку. Свежо и по погоде ✨',
-    chatBadge: 'Tedy печатает…',
+    chatBadge: 'Sevil печатает…',
   },
   secondhand: {
     eyebrow: 'SECONDHAND',
@@ -198,7 +198,7 @@ const ru: Translation = {
       },
       {
         name: 'MAX',
-        tagline: 'Максимум от Tedy',
+        tagline: 'Максимум от Sevil',
         features: ['Всё из PRO', 'Безлимитный AI-стилист', 'Приоритетная генерация', 'Ранний доступ к новому'],
       },
     ],
@@ -215,7 +215,7 @@ const ru: Translation = {
     product: ['Возможности', 'Как это работает', 'Тарифы', 'Скачать'],
     privacy: 'Политика конфиденциальности',
     delete: 'Удалить аккаунт',
-    rights: '© 2026 Tedy',
+    rights: '© 2026 Sevil',
     madeIn: 'Сделано с любовью в Узбекистане 🇺🇿',
   },
 }
@@ -230,7 +230,7 @@ const uz: Translation = {
   hero: {
     eyebrow: 'AI STILIST',
     title: 'Sizning stilistingiz. Har tong — tayyor obraz.',
-    sub: "Shkafingizni suratga oling — Tedy ob-havo, tadbir va didingizga mos mukammal obrazni yig'adi. Har kuni, bir tegishda.",
+    sub: "Shkafingizni suratga oling — Sevil ob-havo, tadbir va didingizga mos mukammal obrazni yig'adi. Har kuni, bir tegishda.",
     trust: 'Bepul · Google yoki Apple bilan kiring',
   },
   store: {
@@ -247,7 +247,7 @@ const uz: Translation = {
     items: [
       {
         icon: '✦',
-        title: 'AI stilist Tedy',
+        title: 'AI stilist Sevil',
         body: "«Bugun nima kiyay?» deb yozing — shkafingizdagi kiyimlardan obraz yig'ib beradi. Tilingizda jonli suhbat.",
       },
       {
@@ -291,14 +291,14 @@ const uz: Translation = {
       },
       {
         title: 'Obrazlarni oling',
-        body: 'Har kuni tayyor look, Tedy esa doim chatda aloqada.',
+        body: 'Har kuni tayyor look, Sevil esa doim chatda aloqada.',
       },
     ],
   },
   ai: {
     eyebrow: 'AI STILIST',
     title: "So'rang — tayyor obrazni oling.",
-    body: "Tedy — cho'ntagingizdagi shaxsiy stilist. Nima kerakligini oddiy so'z bilan yozing — u shkafingizdan ob-havo, tadbir va didingizga mos obrazni yig'adi.",
+    body: "Sevil — cho'ntagingizdagi shaxsiy stilist. Nima kerakligini oddiy so'z bilan yozing — u shkafingizdan ob-havo, tadbir va didingizga mos obrazni yig'adi.",
     checks: [
       'Tilingizda javob beradi',
       "Obrazni sizning kiyimlaringizdan yig'adi",
@@ -307,7 +307,7 @@ const uz: Translation = {
     chatUser: 'Bugun nima kiyay?',
     chatReply:
       "Bugun Toshkentda salqin. Taklif: bej sviter, to'q jinsi, oq krossovka va yengil kurtka. Tetik va ob-havoga mos ✨",
-    chatBadge: 'Tedy yozmoqda…',
+    chatBadge: 'Sevil yozmoqda…',
   },
   secondhand: {
     eyebrow: 'SECONDHAND',
@@ -343,7 +343,7 @@ const uz: Translation = {
       },
       {
         name: 'MAX',
-        tagline: 'Tedy dan maksimum',
+        tagline: 'Sevil dan maksimum',
         features: ['PRO dagi hammasi', 'Cheksiz AI stilist', 'Ustuvor generatsiya', 'Yangiliklarga erta kirish'],
       },
     ],
@@ -360,7 +360,7 @@ const uz: Translation = {
     product: ['Imkoniyatlar', 'Qanday ishlaydi', 'Tariflar', 'Yuklab olish'],
     privacy: 'Maxfiylik siyosati',
     delete: "Hisobni o'chirish",
-    rights: '© 2026 Tedy',
+    rights: '© 2026 Sevil',
     madeIn: "O'zbekistonda mehr bilan yaratildi 🇺🇿",
   },
 }
@@ -375,7 +375,7 @@ const en: Translation = {
   hero: {
     eyebrow: 'AI STYLIST',
     title: 'Your stylist. A ready look every morning.',
-    sub: 'Snap your wardrobe — Tedy builds the perfect outfit for the weather, the occasion and your taste. Every day, in a single tap.',
+    sub: 'Snap your wardrobe — Sevil builds the perfect outfit for the weather, the occasion and your taste. Every day, in a single tap.',
     trust: 'Free · Sign in with Google or Apple',
   },
   store: {
@@ -392,7 +392,7 @@ const en: Translation = {
     items: [
       {
         icon: '✦',
-        title: 'Tedy, your AI stylist',
+        title: 'Sevil, your AI stylist',
         body: 'Ask “what should I wear today?” and get a look built from your own clothes. A live chat in your language.',
       },
       {
@@ -436,14 +436,14 @@ const en: Translation = {
       },
       {
         title: 'Get your looks',
-        body: 'A ready outfit every day, and Tedy always a message away.',
+        body: 'A ready outfit every day, and Sevil always a message away.',
       },
     ],
   },
   ai: {
     eyebrow: 'AI STYLIST',
     title: 'Just ask — get a complete look.',
-    body: 'Tedy is your personal stylist in your pocket. Say what you need in plain words, and it assembles a look from your wardrobe — accounting for the weather, the occasion and your taste.',
+    body: 'Sevil is your personal stylist in your pocket. Say what you need in plain words, and it assembles a look from your wardrobe — accounting for the weather, the occasion and your taste.',
     checks: [
       'Replies in your language',
       'Builds looks from your own clothes',
@@ -452,7 +452,7 @@ const en: Translation = {
     chatUser: 'What should I wear today?',
     chatReply:
       "It's cool in Tashkent today. I suggest: a beige sweater, dark jeans, white sneakers and a light jacket. Fresh and weather-ready ✨",
-    chatBadge: 'Tedy is typing…',
+    chatBadge: 'Sevil is typing…',
   },
   secondhand: {
     eyebrow: 'SECONDHAND',
@@ -488,7 +488,7 @@ const en: Translation = {
       },
       {
         name: 'MAX',
-        tagline: 'The most of Tedy',
+        tagline: 'The most of Sevil',
         features: ['Everything in PRO', 'Unlimited AI stylist', 'Priority generation', 'Early access to new features'],
       },
     ],
@@ -505,7 +505,7 @@ const en: Translation = {
     product: ['Features', 'How it works', 'Pricing', 'Download'],
     privacy: 'Privacy policy',
     delete: 'Delete account',
-    rights: '© 2026 Tedy',
+    rights: '© 2026 Sevil',
     madeIn: 'Made with care in Uzbekistan 🇺🇿',
   },
 }

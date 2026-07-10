@@ -15,9 +15,9 @@ export default function Footer() {
       <div className="mx-auto grid w-full max-w-[1140px] gap-8 px-6 grid-cols-2 md:grid-cols-[2fr_1fr_1fr_1fr]">
         <div className="col-span-2 md:col-span-1">
           <a href="#top" className="mb-3.5 inline-flex items-center gap-2.5">
-            <img src="/logo.svg" alt="Tedy" className="h-[38px] w-[38px] rounded-[11px] shadow-soft" />
+            <img src="/logo.svg" alt="Sevil" className="h-[38px] w-[38px] rounded-[11px] shadow-soft" />
             <span className="text-[21px] font-black -tracking-[0.02em] text-espresso">
-              Tedy
+              Sevil
             </span>
           </a>
           <p className="max-w-[240px] text-[15px] font-semibold text-ink-2">{t.footer.tag}</p>
