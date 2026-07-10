@@ -19,14 +19,32 @@ const NAV: { key: Section; label: string; icon: string }[] = [
   { key: 'cms', label: 'CMS', icon: '✎' },
 ]
 
+const SECTION_KEYS = NAV.map((n) => n.key)
+function sectionFromPath(): Section {
+  const m = window.location.pathname.match(/^\/admin\/([^/]+)/)
+  const s = m?.[1] as Section | undefined
+  return s && (SECTION_KEYS as string[]).includes(s) ? s : 'dashboard'
+}
+
 export default function AdminApp() {
   const [authed, setAuthed] = useState(!!getToken())
-  const [section, setSection] = useState<Section>('dashboard')
+  const [section, setSectionState] = useState<Section>(sectionFromPath)
+
+  // Keep the section in the URL so a refresh (and back/forward) preserves it.
+  const go = (s: Section) => {
+    setSectionState(s)
+    window.history.pushState({}, '', s === 'dashboard' ? '/admin' : `/admin/${s}`)
+  }
 
   useEffect(() => {
     const onLogout = () => setAuthed(false)
+    const onPop = () => setSectionState(sectionFromPath())
     window.addEventListener('sevil-admin-logout', onLogout)
-    return () => window.removeEventListener('sevil-admin-logout', onLogout)
+    window.addEventListener('popstate', onPop)
+    return () => {
+      window.removeEventListener('sevil-admin-logout', onLogout)
+      window.removeEventListener('popstate', onPop)
+    }
   }, [])
 
   if (!authed) return <Login onSuccess={() => setAuthed(true)} />
@@ -52,7 +70,7 @@ export default function AdminApp() {
           {NAV.map((n) => (
             <button
               key={n.key}
-              onClick={() => setSection(n.key)}
+              onClick={() => go(n.key)}
               className={`flex items-center gap-3 rounded-2xl px-3.5 py-2.5 text-[14px] font-bold transition-colors ${
                 section === n.key
                   ? 'bg-white/[0.12] text-onEspresso'
@@ -81,7 +99,7 @@ export default function AdminApp() {
           {NAV.map((n) => (
             <button
               key={n.key}
-              onClick={() => setSection(n.key)}
+              onClick={() => go(n.key)}
               className={`shrink-0 rounded-full px-3 py-1.5 text-[13px] font-extrabold ${
                 section === n.key ? 'bg-white/[0.16] text-onEspresso' : 'text-onEspresso/60'
               }`}
