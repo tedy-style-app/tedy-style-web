@@ -7,8 +7,8 @@ export default function DownloadCTA() {
   return (
     <section className="py-24" id="download">
       <div className="mx-auto w-full max-w-[1140px] px-6">
-        <Reveal className="relative mx-auto max-w-[860px] overflow-hidden rounded-5xl border border-hair bg-[linear-gradient(160deg,#FFF4EC,#FFF8F3)] px-8 py-16 text-center shadow-card">
-          <div className="pointer-events-none absolute inset-x-[-10%] bottom-[-60%] h-80 bg-grad-peach" />
+        <Reveal className="relative mx-auto max-w-[860px] overflow-hidden rounded-5xl border border-hair bg-[linear-gradient(160deg,#FBF8F1,#F1E9DA)] px-8 py-16 text-center shadow-card">
+          <div className="pointer-events-none absolute inset-x-[-10%] bottom-[-60%] h-80 bg-grad-beige" />
           <img
             src="/logo.svg"
             alt=""

@@ -11,7 +11,7 @@ export default function SectionHead({
 }) {
   return (
     <Reveal className="mx-auto mb-14 max-w-[640px] text-center">
-      <span className="mb-4 inline-block text-xs font-extrabold tracking-[2.4px] text-orange-dark">
+      <span className="mb-4 inline-block text-xs font-extrabold tracking-[2.4px] text-gold">
         {eyebrow}
       </span>
       <h2 className="text-[clamp(28px,4vw,40px)]">{title}</h2>

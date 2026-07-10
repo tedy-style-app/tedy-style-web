@@ -6,18 +6,18 @@ import {
 } from '../constants'
 import { useLang } from '../i18n'
 
-const PRODUCT_HREFS = ['#features', '#how', '#community', '#download']
+const PRODUCT_HREFS = ['#features', '#how', '#pricing', '#download']
 
 export default function Footer() {
   const { t } = useLang()
   return (
-    <footer className="border-t border-hair bg-white pb-8 pt-16">
+    <footer className="border-t border-hair bg-cream pb-8 pt-16">
       <div className="mx-auto grid w-full max-w-[1140px] gap-8 px-6 grid-cols-2 md:grid-cols-[2fr_1fr_1fr_1fr]">
         <div className="col-span-2 md:col-span-1">
           <a href="#top" className="mb-3.5 inline-flex items-center gap-2.5">
-            <img src="/logo.svg" alt="Tedy Style" className="h-[38px] w-[38px] rounded-[10px] shadow-soft" />
-            <span className="text-[21px] font-black -tracking-[0.02em] text-orange-dark">
-              Tedy<span className="ml-px font-bold italic text-orange">style</span>
+            <img src="/logo.svg" alt="Tedy" className="h-[38px] w-[38px] rounded-[11px] shadow-soft" />
+            <span className="text-[21px] font-black -tracking-[0.02em] text-espresso">
+              Tedy
             </span>
           </a>
           <p className="max-w-[240px] text-[15px] font-semibold text-ink-2">{t.footer.tag}</p>
@@ -75,7 +75,7 @@ function FooterLink({
     <a
       href={href}
       {...(external ? { target: '_blank', rel: 'noopener' } : {})}
-      className="mb-[11px] block text-[15px] font-semibold text-ink-2 transition-colors hover:text-orange-dark"
+      className="mb-[11px] block text-[15px] font-semibold text-ink-2 transition-colors hover:text-espresso"
     >
       {children}
     </a>

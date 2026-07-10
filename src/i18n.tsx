@@ -7,7 +7,7 @@ import {
   type ReactNode,
 } from 'react'
 
-export type Lang = 'uz' | 'en'
+export type Lang = 'ru' | 'uz' | 'en'
 
 export interface Feature {
   icon: string
@@ -20,19 +20,46 @@ export interface Step {
   body: string
 }
 
+export interface Plan {
+  name: string
+  tagline: string
+  features: string[]
+  highlight?: boolean
+  badge?: string
+}
+
 export interface Translation {
-  nav: { features: string; how: string; community: string; download: string }
+  nav: { features: string; how: string; pricing: string; download: string }
   hero: { eyebrow: string; title: string; sub: string; trust: string }
   store: { appStoreSmall: string; appStore: string; playSmall: string; play: string }
   strip: string[]
   features: { eyebrow: string; title: string; lead: string; items: Feature[] }
   how: { eyebrow: string; title: string; steps: Step[] }
-  magic: { eyebrow: string; title: string; body: string; checks: string[] }
-  community: {
+  ai: {
     eyebrow: string
     title: string
     body: string
-    stats: { icon: string; label: string }[]
+    checks: string[]
+    chatUser: string
+    chatReply: string
+    chatBadge: string
+  }
+  secondhand: {
+    eyebrow: string
+    title: string
+    body: string
+    points: { icon: string; label: string }[]
+    free: string
+    itemTitle: string
+    itemMeta: string
+  }
+  pricing: {
+    eyebrow: string
+    title: string
+    lead: string
+    note: string
+    cta: string
+    plans: Plan[]
   }
   cta: { title: string; body: string }
   footer: {
@@ -48,60 +75,205 @@ export interface Translation {
   }
 }
 
+const ru: Translation = {
+  nav: {
+    features: 'Возможности',
+    how: 'Как это работает',
+    pricing: 'Тарифы',
+    download: 'Скачать',
+  },
+  hero: {
+    eyebrow: 'AI-СТИЛИСТ',
+    title: 'Твой стилист. Каждое утро — готовый образ.',
+    sub: 'Сфотографируй свой гардероб — Tedy соберёт идеальный образ под погоду, повод и твой вкус. Каждый день, в одно касание.',
+    trust: 'Бесплатно · Вход через Google или Apple',
+  },
+  store: {
+    appStoreSmall: 'Загрузите в',
+    appStore: 'App Store',
+    playSmall: 'Доступно в',
+    play: 'Google Play',
+  },
+  strip: ['Личный AI-стилист', 'Погода твоего города', '3 языка', 'Бесплатный старт'],
+  features: {
+    eyebrow: 'ВОЗМОЖНОСТИ',
+    title: 'Умный помощник для твоего гардероба',
+    lead: 'Выбрать, что надеть, найти свой стиль и подарить вещам вторую жизнь — всё в одном приложении.',
+    items: [
+      {
+        icon: '✦',
+        title: 'AI-стилист Tedy',
+        body: 'Напиши «что надеть сегодня?» — и получи образ, собранный из твоих вещей. Живой чат на твоём языке.',
+      },
+      {
+        icon: '📸',
+        title: 'Умный гардероб',
+        body: 'Сфотографируй одежду — AI распознаёт её и раскладывает по категориям, цветам и сезонам.',
+      },
+      {
+        icon: '☀️',
+        title: 'Образ на сегодня',
+        body: 'Каждое утро готовый лук, подобранный под погоду твоего города и содержимое шкафа.',
+      },
+      {
+        icon: '🎨',
+        title: 'Персонализация',
+        body: 'Цветотип, тип фигуры, любимые цвета и стиль — образы получаются точно под тебя.',
+      },
+      {
+        icon: '🛍️',
+        title: 'Secondhand',
+        body: 'Отдавай ненужное даром и находи вещи от других — из гардероба в пару касаний.',
+      },
+      {
+        icon: '🌐',
+        title: 'Твой язык, твои данные',
+        body: 'Русский, oʻzbek и English. Приватность по умолчанию — гардероб виден только тебе.',
+      },
+    ],
+  },
+  how: {
+    eyebrow: 'КАК ЭТО РАБОТАЕТ',
+    title: 'Три простых шага',
+    steps: [
+      {
+        title: 'Заполни гардероб',
+        body: 'Сфотографируй свои вещи — AI сам их распознает и разложит по полочкам.',
+      },
+      {
+        title: 'Расскажи о себе',
+        body: 'Цветотип, фигура и стиль — пара минут, чтобы образы стали точно твоими.',
+      },
+      {
+        title: 'Получай образы',
+        body: 'Каждый день — готовый лук, а Tedy всегда на связи в чате.',
+      },
+    ],
+  },
+  ai: {
+    eyebrow: 'AI-СТИЛИСТ',
+    title: 'Спроси — и получи готовый образ.',
+    body: 'Tedy — личный стилист в кармане. Напиши обычными словами, что нужно, — и он соберёт образ из твоего гардероба с учётом погоды, повода и твоего вкуса.',
+    checks: [
+      'Отвечает на твоём языке',
+      'Собирает образ из твоих вещей',
+      'Помнит твой стиль и погоду',
+    ],
+    chatUser: 'Что надеть сегодня?',
+    chatReply:
+      'Сегодня в Ташкенте прохладно. Предлагаю: бежевый свитер, тёмные джинсы, белые кроссовки и лёгкую куртку. Свежо и по погоде ✨',
+    chatBadge: 'Tedy печатает…',
+  },
+  secondhand: {
+    eyebrow: 'SECONDHAND',
+    title: 'Дай вещам вторую жизнь.',
+    body: 'Не носишь? Отдай даром. Публикуй вещи из своего гардероба в пару касаний, находи находки от других и договаривайся напрямую в Telegram.',
+    points: [
+      { icon: '🎁', label: 'Отдавай даром' },
+      { icon: '⚡', label: 'Публикация в 2 касания' },
+      { icon: '💬', label: 'Связь в Telegram' },
+    ],
+    free: 'Даром',
+    itemTitle: 'Бежевое пальто',
+    itemMeta: 'Размер M · Отличное',
+  },
+  pricing: {
+    eyebrow: 'ТАРИФЫ',
+    title: 'Начни бесплатно',
+    lead: 'Базовые возможности — навсегда бесплатны. Больше AI — на PRO и MAX.',
+    note: 'Оформление и цены — в приложении.',
+    cta: 'Открыть в приложении',
+    plans: [
+      {
+        name: 'Free',
+        tagline: 'Всё, чтобы начать',
+        features: ['Умный гардероб', 'Образ на сегодня', 'AI-чат с базовым лимитом', 'Secondhand'],
+      },
+      {
+        name: 'PRO',
+        tagline: 'Для тех, кто хочет больше',
+        highlight: true,
+        badge: 'Популярный',
+        features: ['Всё из Free', 'Больше AI-образов', 'Расширенный AI-стилист', 'Без рекламы'],
+      },
+      {
+        name: 'MAX',
+        tagline: 'Максимум от Tedy',
+        features: ['Всё из PRO', 'Безлимитный AI-стилист', 'Приоритетная генерация', 'Ранний доступ к новому'],
+      },
+    ],
+  },
+  cta: {
+    title: 'Будь собой каждый день',
+    body: 'Для iOS и Android. Скачай бесплатно и получи свой первый образ уже сегодня.',
+  },
+  footer: {
+    tag: 'Умный гардероб. Идеальные образы.',
+    productH: 'Продукт',
+    legalH: 'Правовое',
+    contactH: 'Контакты',
+    product: ['Возможности', 'Как это работает', 'Тарифы', 'Скачать'],
+    privacy: 'Политика конфиденциальности',
+    delete: 'Удалить аккаунт',
+    rights: '© 2026 Tedy',
+    madeIn: 'Сделано с любовью в Узбекистане 🇺🇿',
+  },
+}
+
 const uz: Translation = {
   nav: {
     features: 'Imkoniyatlar',
     how: 'Qanday ishlaydi',
-    community: 'Jamiyat',
+    pricing: 'Tariflar',
     download: 'Yuklab olish',
   },
   hero: {
     eyebrow: 'AI STILIST',
-    title: 'Bugun nima kiyishni Tedy hal qiladi.',
-    sub: "Kiyimlaringizni suratga oling — Tedy ob-havo va uslubingizga mos mukammal lookni yig'adi. Har kuni, bir lahzada.",
+    title: 'Sizning stilistingiz. Har tong — tayyor obraz.',
+    sub: "Shkafingizni suratga oling — Tedy ob-havo, tadbir va didingizga mos mukammal obrazni yig'adi. Har kuni, bir tegishda.",
     trust: 'Bepul · Google yoki Apple bilan kiring',
   },
   store: {
-    appStoreSmall: 'Yuklab olish:',
+    appStoreSmall: 'Yuklab oling:',
     appStore: 'App Store',
-    playSmall: 'Yuklab olish:',
+    playSmall: 'Yuklab oling:',
     play: 'Google Play',
   },
-  strip: ['AI bilan ishlaydi', 'Ob-havoga mos', "O'zbekcha", 'Bepul boshlang'],
+  strip: ['Shaxsiy AI stilist', 'Shahringiz ob-havosi', '3 til', 'Bepul boshlang'],
   features: {
     eyebrow: 'IMKONIYATLAR',
     title: 'Shkafingiz uchun aqlli yordamchi',
-    lead: 'Kiyimni tanlash, uslubni topish va looklarni ulashish — barchasi bitta ilovada.',
+    lead: 'Nima kiyishni tanlash, uslubni topish va kiyimlarga ikkinchi hayot berish — barchasi bitta ilovada.',
     items: [
+      {
+        icon: '✦',
+        title: 'AI stilist Tedy',
+        body: "«Bugun nima kiyay?» deb yozing — shkafingizdagi kiyimlardan obraz yig'ib beradi. Tilingizda jonli suhbat.",
+      },
       {
         icon: '📸',
         title: 'Aqlli shkaf',
-        body: 'Kiyimni suratga oling — AI uni avtomatik turkumlaydi: rang, kategoriya, mavsum.',
+        body: 'Kiyimni suratga oling — AI uni taniydi va kategoriya, rang, mavsum boʻyicha tartiblaydi.',
       },
       {
-        icon: '🧠',
-        title: 'Kunlik look',
-        body: 'Har tongda ob-havo va shkafingizga mos tayyor outfit sizni kutadi.',
+        icon: '☀️',
+        title: 'Bugungi obraz',
+        body: 'Har tong shahringiz ob-havosi va shkafingizga mos tayyor look sizni kutadi.',
       },
       {
-        icon: '🌤️',
-        title: 'Ob-havoga mos',
-        body: 'Toshkentdan Xivagacha — har bir viloyat ob-havosiga moslashadi.',
-      },
-      {
-        icon: '🪄',
-        title: "Vizual ko'rinish",
-        body: 'AI lookni yagona rasmga jamlaydi — kiyishdan oldin ko’ring.',
-      },
-      {
-        icon: '💬',
-        title: 'Jamiyat va suhbat',
-        body: 'Looklaringizni ulashing, boshqalarni kuzating, real vaqtda yozishing.',
+        icon: '🎨',
+        title: 'Personalizatsiya',
+        body: 'Rangturingiz, gavda tuzilishi, sevimli ranglar va uslub — obrazlar aynan sizga mos.',
       },
       {
         icon: '🛍️',
-        title: 'Xarid maslahati',
-        body: "Shkafingizda nima yetishmayotganini AI aytadi va xohish ro'yxatini tuzadi.",
+        title: 'Secondhand',
+        body: 'Keraksiz kiyimni daromad bering va boshqalarnikini toping — shkafdan bir necha tegishda.',
+      },
+      {
+        icon: '🌐',
+        title: 'Tilingiz, maʼlumotingiz',
+        body: "Ruscha, oʻzbek va English. Maxfiylik odatiy — shkafingizni faqat siz koʻrasiz.",
       },
     ],
   },
@@ -110,52 +282,85 @@ const uz: Translation = {
     title: 'Uch oddiy qadam',
     steps: [
       {
-        title: "Shkafingizni to'ldiring",
-        body: "Kiyimlaringizni suratga oling. AI ularni o'zi tartiblaydi.",
+        title: "Shkafni to'ldiring",
+        body: "Kiyimlaringizni suratga oling — AI ularni o'zi taniydi va tartiblaydi.",
       },
       {
-        title: 'Tedy uslub tanlaydi',
-        body: "AI ob-havo va didingizga qarab mukammal lookni yig'adi.",
+        title: "O'zingiz haqingizda ayting",
+        body: "Rangtur, gavda va uslub — obrazlar aynan sizniki bo'lishi uchun bir necha daqiqa.",
       },
       {
-        title: 'Kiying va ulashing',
-        body: 'Tayyor lookni kiying va jamiyat bilan bo’lishing.',
+        title: 'Obrazlarni oling',
+        body: 'Har kuni tayyor look, Tedy esa doim chatda aloqada.',
       },
     ],
   },
-  magic: {
-    eyebrow: 'AI SEHRI',
-    title: "Bir tugma — to'liq look.",
-    body: 'Tedy shkafingizdagi bir-biriga mos kiyimlarni tanlaydi, ularni birlashtiradi va sizga tayyor outfitni ko’rsatadi. Yoqmadimi? Bitta tegish bilan yangisini oling.',
+  ai: {
+    eyebrow: 'AI STILIST',
+    title: "So'rang — tayyor obrazni oling.",
+    body: "Tedy — cho'ntagingizdagi shaxsiy stilist. Nima kerakligini oddiy so'z bilan yozing — u shkafingizdan ob-havo, tadbir va didingizga mos obrazni yig'adi.",
     checks: [
-      'Ob-havo va mavsumni hisobga oladi',
-      'Sizning uslubingizga moslashadi',
-      'Haftalik reja tuzadi',
+      'Tilingizda javob beradi',
+      "Obrazni sizning kiyimlaringizdan yig'adi",
+      'Uslub va ob-havoni eslab qoladi',
     ],
+    chatUser: 'Bugun nima kiyay?',
+    chatReply:
+      "Bugun Toshkentda salqin. Taklif: bej sviter, to'q jinsi, oq krossovka va yengil kurtka. Tetik va ob-havoga mos ✨",
+    chatBadge: 'Tedy yozmoqda…',
   },
-  community: {
-    eyebrow: 'JAMIYAT',
-    title: 'Uslub — birga chiroyli.',
-    body: "Looklaringizni ulashing, sevimli stilistlaringizni kuzating, layk va izoh qoldiring. Yoqqan inson bilan to'g'ridan-to'g'ri yozishing.",
-    stats: [
-      { icon: '♥', label: 'Layk va izohlar' },
-      { icon: '＋', label: 'Kuzatish' },
-      { icon: '💬', label: 'Jonli suhbat' },
+  secondhand: {
+    eyebrow: 'SECONDHAND',
+    title: 'Kiyimlarga ikkinchi hayot bering.',
+    body: "Kiymayapsizmi? Daromad bering. Shkafingizdagi kiyimlarni bir necha tegishda joylang, boshqalarnikini toping va to'g'ridan-to'g'ri Telegramda kelishing.",
+    points: [
+      { icon: '🎁', label: 'Daromad bering' },
+      { icon: '⚡', label: '2 tegishda joylang' },
+      { icon: '💬', label: 'Telegram orqali aloqa' },
+    ],
+    free: 'Bepul',
+    itemTitle: 'Bej palto',
+    itemMeta: "O'lcham M · Aʼlo",
+  },
+  pricing: {
+    eyebrow: 'TARIFLAR',
+    title: 'Bepul boshlang',
+    lead: "Asosiy imkoniyatlar — abadiy bepul. Ko'proq AI — PRO va MAX'da.",
+    note: 'Rasmiylashtirish va narxlar — ilovada.',
+    cta: 'Ilovada ochish',
+    plans: [
+      {
+        name: 'Free',
+        tagline: 'Boshlash uchun hammasi',
+        features: ['Aqlli shkaf', 'Bugungi obraz', 'AI-chat (asosiy limit)', 'Secondhand'],
+      },
+      {
+        name: 'PRO',
+        tagline: "Ko'proq xohlaganlar uchun",
+        highlight: true,
+        badge: 'Ommabop',
+        features: ['Free dagi hammasi', "Ko'proq AI-obraz", 'Kengaytirilgan AI stilist', 'Reklamasiz'],
+      },
+      {
+        name: 'MAX',
+        tagline: 'Tedy dan maksimum',
+        features: ['PRO dagi hammasi', 'Cheksiz AI stilist', 'Ustuvor generatsiya', 'Yangiliklarga erta kirish'],
+      },
     ],
   },
   cta: {
-    title: "Tedy bilan har kuni o'zingizcha",
-    body: 'iOS va Android uchun. Bepul yuklab oling va birinchi lookingizni bugun oling.',
+    title: "Har kuni o'zingizcha",
+    body: 'iOS va Android uchun. Bepul yuklab oling va birinchi obrazingizni bugun oling.',
   },
   footer: {
-    tag: 'Aqlli shkaf. Mukammal look.',
+    tag: 'Aqlli shkaf. Mukammal obrazlar.',
     productH: 'Mahsulot',
     legalH: 'Huquqiy',
     contactH: 'Aloqa',
-    product: ['Imkoniyatlar', 'Qanday ishlaydi', 'Jamiyat', 'Yuklab olish'],
+    product: ['Imkoniyatlar', 'Qanday ishlaydi', 'Tariflar', 'Yuklab olish'],
     privacy: 'Maxfiylik siyosati',
     delete: "Hisobni o'chirish",
-    rights: '© 2026 Tedy Style',
+    rights: '© 2026 Tedy',
     madeIn: "O'zbekistonda mehr bilan yaratildi 🇺🇿",
   },
 }
@@ -164,13 +369,13 @@ const en: Translation = {
   nav: {
     features: 'Features',
     how: 'How it works',
-    community: 'Community',
+    pricing: 'Pricing',
     download: 'Download',
   },
   hero: {
     eyebrow: 'AI STYLIST',
-    title: 'Tedy decides what you wear today.',
-    sub: 'Snap your clothes — Tedy builds the perfect outfit for your weather and your style. Every day, in a single tap.',
+    title: 'Your stylist. A ready look every morning.',
+    sub: 'Snap your wardrobe — Tedy builds the perfect outfit for the weather, the occasion and your taste. Every day, in a single tap.',
     trust: 'Free · Sign in with Google or Apple',
   },
   store: {
@@ -179,41 +384,41 @@ const en: Translation = {
     playSmall: 'Get it on',
     play: 'Google Play',
   },
-  strip: ['AI-powered', 'Weather-aware', 'Built for Uzbekistan', 'Free to start'],
+  strip: ['A personal AI stylist', "Your city's weather", '3 languages', 'Free to start'],
   features: {
     eyebrow: 'FEATURES',
     title: 'A smart companion for your wardrobe',
-    lead: 'Choosing what to wear, finding your style, and sharing your looks — all in one app.',
+    lead: 'Choosing what to wear, finding your style, and giving clothes a second life — all in one app.',
     items: [
+      {
+        icon: '✦',
+        title: 'Tedy, your AI stylist',
+        body: 'Ask “what should I wear today?” and get a look built from your own clothes. A live chat in your language.',
+      },
       {
         icon: '📸',
         title: 'Smart wardrobe',
-        body: 'Snap a clothing item and AI tags it automatically: color, category, season.',
+        body: 'Snap a clothing item — AI recognizes it and sorts it by category, color and season.',
       },
       {
-        icon: '🧠',
-        title: 'Daily looks',
-        body: 'A ready-made outfit waits for you each morning, matched to the weather and your closet.',
+        icon: '☀️',
+        title: 'Look of the day',
+        body: "A ready outfit every morning, matched to your city's weather and your closet.",
       },
       {
-        icon: '🌤️',
-        title: 'Weather-aware',
-        body: "From Tashkent to Khiva — it adapts to your region's forecast.",
-      },
-      {
-        icon: '🪄',
-        title: 'See it first',
-        body: 'AI composes your look into a single image — see it before you wear it.',
-      },
-      {
-        icon: '💬',
-        title: 'Community & chat',
-        body: 'Share your looks, follow others, and message friends in real time.',
+        icon: '🎨',
+        title: 'Personalization',
+        body: 'Color type, body shape, favorite colors and style — looks made exactly for you.',
       },
       {
         icon: '🛍️',
-        title: 'Shopping tips',
-        body: "AI tells you what's missing from your closet and builds your wishlist.",
+        title: 'Secondhand',
+        body: 'Give away what you no longer wear and discover pieces from others — in a couple of taps.',
+      },
+      {
+        icon: '🌐',
+        title: 'Your language, your data',
+        body: 'Russian, oʻzbek and English. Private by default — your wardrobe is yours alone.',
       },
     ],
   },
@@ -223,36 +428,69 @@ const en: Translation = {
     steps: [
       {
         title: 'Fill your wardrobe',
-        body: 'Take photos of your clothes. AI organizes them for you.',
+        body: 'Photograph your clothes — AI recognizes and organizes them for you.',
       },
       {
-        title: 'Tedy styles you',
-        body: 'AI assembles the perfect look from the weather and your taste.',
+        title: 'Tell us about you',
+        body: 'Color type, shape and style — a couple of minutes to make looks truly yours.',
       },
       {
-        title: 'Wear it & share',
-        body: 'Wear your outfit and share it with the community.',
+        title: 'Get your looks',
+        body: 'A ready outfit every day, and Tedy always a message away.',
       },
     ],
   },
-  magic: {
-    eyebrow: 'THE MAGIC MOMENT',
-    title: 'One tap — a complete look.',
-    body: 'Tedy picks what goes together from your closet, composes it, and shows you the finished outfit. Not feeling it? One tap brings a fresh one.',
+  ai: {
+    eyebrow: 'AI STYLIST',
+    title: 'Just ask — get a complete look.',
+    body: 'Tedy is your personal stylist in your pocket. Say what you need in plain words, and it assembles a look from your wardrobe — accounting for the weather, the occasion and your taste.',
     checks: [
-      'Accounts for weather and season',
-      'Learns your personal style',
-      'Plans your whole week',
+      'Replies in your language',
+      'Builds looks from your own clothes',
+      'Remembers your style and weather',
     ],
+    chatUser: 'What should I wear today?',
+    chatReply:
+      "It's cool in Tashkent today. I suggest: a beige sweater, dark jeans, white sneakers and a light jacket. Fresh and weather-ready ✨",
+    chatBadge: 'Tedy is typing…',
   },
-  community: {
-    eyebrow: 'COMMUNITY',
-    title: 'Style is better together.',
-    body: 'Share your looks, follow the stylists you love, like and comment. Message anyone who inspires you, directly.',
-    stats: [
-      { icon: '♥', label: 'Likes & comments' },
-      { icon: '＋', label: 'Follow people' },
-      { icon: '💬', label: 'Live chat' },
+  secondhand: {
+    eyebrow: 'SECONDHAND',
+    title: 'Give clothes a second life.',
+    body: 'Not wearing it? Give it away. Post items from your wardrobe in a couple of taps, discover finds from others and arrange it directly on Telegram.',
+    points: [
+      { icon: '🎁', label: 'Give away free' },
+      { icon: '⚡', label: 'Post in 2 taps' },
+      { icon: '💬', label: 'Chat on Telegram' },
+    ],
+    free: 'Free',
+    itemTitle: 'Beige coat',
+    itemMeta: 'Size M · Excellent',
+  },
+  pricing: {
+    eyebrow: 'PRICING',
+    title: 'Start for free',
+    lead: 'The essentials are free forever. More AI comes with PRO and MAX.',
+    note: 'Pricing and checkout are in the app.',
+    cta: 'Open in the app',
+    plans: [
+      {
+        name: 'Free',
+        tagline: 'Everything to get started',
+        features: ['Smart wardrobe', 'Look of the day', 'AI chat with a basic limit', 'Secondhand'],
+      },
+      {
+        name: 'PRO',
+        tagline: 'For those who want more',
+        highlight: true,
+        badge: 'Popular',
+        features: ['Everything in Free', 'More AI looks', 'Extended AI stylist', 'No ads'],
+      },
+      {
+        name: 'MAX',
+        tagline: 'The most of Tedy',
+        features: ['Everything in PRO', 'Unlimited AI stylist', 'Priority generation', 'Early access to new features'],
+      },
     ],
   },
   cta: {
@@ -264,15 +502,15 @@ const en: Translation = {
     productH: 'Product',
     legalH: 'Legal',
     contactH: 'Contact',
-    product: ['Features', 'How it works', 'Community', 'Download'],
+    product: ['Features', 'How it works', 'Pricing', 'Download'],
     privacy: 'Privacy policy',
     delete: 'Delete account',
-    rights: '© 2026 Tedy Style',
+    rights: '© 2026 Tedy',
     madeIn: 'Made with care in Uzbekistan 🇺🇿',
   },
 }
 
-const translations: Record<Lang, Translation> = { uz, en }
+const translations: Record<Lang, Translation> = { ru, uz, en }
 
 interface LanguageContextValue {
   lang: Lang
@@ -287,7 +525,7 @@ const STORAGE_KEY = 'tedy-lang'
 function readInitialLang(): Lang {
   try {
     const saved = localStorage.getItem(STORAGE_KEY)
-    if (saved === 'uz' || saved === 'en') return saved
+    if (saved === 'ru' || saved === 'uz' || saved === 'en') return saved
   } catch {
     /* localStorage unavailable — fall through */
   }

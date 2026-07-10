@@ -3,10 +3,10 @@ import { useLang, type Lang } from '../i18n'
 
 function Brand({ className = '' }: { className?: string }) {
   return (
-    <a href="#top" aria-label="Tedy Style" className={`inline-flex items-center gap-2.5 ${className}`}>
-      <img src="/logo.svg" alt="Tedy Style" className="h-[38px] w-[38px] rounded-[10px] shadow-soft" />
-      <span className="brand-word text-[21px] font-black -tracking-[0.02em] text-orange-dark">
-        Tedy<span className="ml-px font-bold italic text-orange">style</span>
+    <a href="#top" aria-label="Tedy" className={`inline-flex items-center gap-2.5 ${className}`}>
+      <img src="/logo.svg" alt="Tedy" className="h-[38px] w-[38px] rounded-[11px] shadow-soft" />
+      <span className="brand-word text-[21px] font-black -tracking-[0.02em] text-espresso">
+        Tedy
       </span>
     </a>
   )
@@ -14,20 +14,20 @@ function Brand({ className = '' }: { className?: string }) {
 
 function LangToggle() {
   const { lang, setLang } = useLang()
-  const langs: Lang[] = ['uz', 'en']
+  const langs: Lang[] = ['ru', 'uz', 'en']
   return (
     <div
       role="group"
-      aria-label="Til / Language"
-      className="inline-flex gap-0.5 rounded-full border border-hair bg-peach-tint p-[3px]"
+      aria-label="Язык / Til / Language"
+      className="inline-flex gap-0.5 rounded-full border border-hair bg-cream p-[3px]"
     >
       {langs.map((l) => (
         <button
           key={l}
           type="button"
           onClick={() => setLang(l)}
-          className={`rounded-full px-[11px] py-[5px] text-xs font-extrabold uppercase tracking-[0.5px] transition-all duration-200 ease-out ${
-            lang === l ? 'bg-white text-orange-dark shadow-soft' : 'text-ink-3'
+          className={`rounded-full px-[10px] py-[5px] text-xs font-extrabold uppercase tracking-[0.5px] transition-all duration-200 ease-out ${
+            lang === l ? 'bg-espresso text-onEspresso shadow-soft' : 'text-ink-3'
           }`}
         >
           {l}
@@ -51,12 +51,12 @@ export default function Nav() {
   const links = [
     { href: '#features', label: t.nav.features },
     { href: '#how', label: t.nav.how },
-    { href: '#community', label: t.nav.community },
+    { href: '#pricing', label: t.nav.pricing },
   ]
 
   return (
     <header
-      className={`sticky top-0 z-[100] border-b bg-page/[0.72] backdrop-blur-[18px] backdrop-saturate-[180%] transition-[border-color,box-shadow] duration-300 ${
+      className={`sticky top-0 z-[100] border-b bg-page/[0.78] backdrop-blur-[18px] backdrop-saturate-[180%] transition-[border-color,box-shadow] duration-300 ${
         scrolled ? 'border-hair shadow-soft' : 'border-transparent'
       }`}
     >
@@ -64,12 +64,12 @@ export default function Nav() {
         {/* Hide the wordmark on very small screens — the logo mark carries it */}
         <Brand className="[&_.brand-word]:hidden sm:[&_.brand-word]:inline" />
 
-        <nav aria-label="Asosiy menyu" className="hidden gap-[30px] md:flex">
+        <nav aria-label="Menu" className="hidden gap-[30px] md:flex">
           {links.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="text-[15px] font-bold text-ink-2 transition-colors hover:text-orange-dark"
+              className="text-[15px] font-bold text-ink-2 transition-colors hover:text-espresso"
             >
               {link.label}
             </a>
@@ -80,7 +80,7 @@ export default function Nav() {
           <LangToggle />
           <a
             href="#download"
-            className="inline-flex items-center justify-center rounded-full bg-grad-primary px-5 py-2.5 text-sm font-extrabold text-white shadow-glow transition-[transform,box-shadow] duration-200 ease-out hover:-translate-y-0.5"
+            className="inline-flex items-center justify-center rounded-full bg-grad-espresso px-5 py-2.5 text-sm font-extrabold text-onEspresso shadow-glow transition-[transform,box-shadow] duration-200 ease-out hover:-translate-y-0.5"
           >
             {t.nav.download}
           </a>

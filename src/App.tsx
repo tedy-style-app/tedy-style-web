@@ -4,7 +4,8 @@ import ValueStrip from './components/ValueStrip'
 import Features from './components/Features'
 import HowItWorks from './components/HowItWorks'
 import MagicMoment from './components/MagicMoment'
-import Community from './components/Community'
+import Secondhand from './components/Secondhand'
+import Pricing from './components/Pricing'
 import DownloadCTA from './components/DownloadCTA'
 import Footer from './components/Footer'
 
@@ -18,7 +19,8 @@ export default function App() {
         <Features />
         <HowItWorks />
         <MagicMoment />
-        <Community />
+        <Secondhand />
+        <Pricing />
         <DownloadCTA />
       </main>
       <Footer />

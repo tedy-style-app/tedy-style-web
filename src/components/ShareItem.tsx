@@ -94,7 +94,7 @@ export default function ShareItem({ id }: { id: string }) {
 
   // Reflect the item name in the tab title.
   useEffect(() => {
-    if (item?.name) document.title = `${item.name} — Sevil`
+    if (item?.name) document.title = `${item.name} — Tedy`
   }, [item])
 
   // Attempt a silent deep-link once on first load (no store fallback here —
@@ -121,12 +121,12 @@ export default function ShareItem({ id }: { id: string }) {
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-page px-5 py-10">
-      {/* peach wash, echoing the marketing hero */}
+      {/* warm beige / gold wash, echoing the marketing hero */}
       <div
         className="pointer-events-none absolute inset-x-0 -top-[10%] -z-10 h-[520px]"
         style={{
           background:
-            'radial-gradient(760px 460px at 80% 0%, rgba(255,217,190,0.55), rgba(255,217,190,0) 62%), radial-gradient(620px 420px at 8% 12%, rgba(255,244,236,0.9), rgba(255,244,236,0) 60%)',
+            'radial-gradient(760px 460px at 80% 0%, rgba(203,154,92,0.16), rgba(203,154,92,0) 62%), radial-gradient(620px 420px at 8% 12%, rgba(251,248,241,0.95), rgba(251,248,241,0) 60%)',
         }}
       />
 
@@ -137,11 +137,11 @@ export default function ShareItem({ id }: { id: string }) {
       >
         <img
           src="/logo.svg"
-          alt="Sevil"
+          alt="Tedy"
           className="h-9 w-9 rounded-[10px] shadow-soft"
         />
-        <span className="text-[19px] font-black -tracking-[0.02em] text-orange-dark">
-          Sevil
+        <span className="text-[19px] font-black -tracking-[0.02em] text-espresso">
+          Tedy
         </span>
       </a>
 
@@ -159,13 +159,13 @@ export default function ShareItem({ id }: { id: string }) {
 function LoadingCard() {
   return (
     <div className="overflow-hidden rounded-5xl border border-hair bg-white shadow-card">
-      <div className="aspect-[4/5] w-full animate-pulse bg-peach-whisper" />
+      <div className="aspect-[4/5] w-full animate-pulse bg-cream" />
       <div className="flex flex-col gap-4 p-6">
-        <div className="h-6 w-3/4 animate-pulse rounded-full bg-peach-whisper" />
-        <div className="h-4 w-2/5 animate-pulse rounded-full bg-peach-whisper" />
+        <div className="h-6 w-3/4 animate-pulse rounded-full bg-cream" />
+        <div className="h-4 w-2/5 animate-pulse rounded-full bg-cream" />
         <div className="mt-2 flex items-center gap-3">
           <span
-            className="h-8 w-8 animate-spin rounded-full border-[3px] border-hair border-t-orange"
+            className="h-8 w-8 animate-spin rounded-full border-[3px] border-hair border-t-gold"
             aria-hidden="true"
           />
           <span className="text-[15px] font-semibold text-ink-3">
@@ -180,7 +180,7 @@ function LoadingCard() {
 function ErrorCard({ onOpenApp }: { onOpenApp: () => void }) {
   return (
     <div className="rounded-5xl border border-hair bg-white px-7 py-12 text-center shadow-card">
-      <div className="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-peach-whisper text-[34px]">
+      <div className="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-cream text-[34px]">
         🤷
       </div>
       <h1 className="text-[24px] font-extrabold text-ink">
@@ -188,19 +188,19 @@ function ErrorCard({ onOpenApp }: { onOpenApp: () => void }) {
       </h1>
       <p className="mx-auto mt-3 max-w-[320px] text-[15px] font-medium text-ink-2">
         Возможно, вещь уже отдали или ссылка устарела. Загляните в приложение
-        Sevil — там всегда есть свежие вещи даром.
+        Tedy — там всегда есть свежие вещи даром.
       </p>
       <div className="mt-7 flex flex-col gap-3">
         <button
           type="button"
           onClick={onOpenApp}
-          className="w-full rounded-2xl bg-grad-primary py-3.5 text-[16px] font-extrabold text-white shadow-glow transition-transform duration-200 ease-out hover:-translate-y-0.5"
+          className="w-full rounded-2xl bg-grad-espresso py-3.5 text-[16px] font-extrabold text-white shadow-glow transition-transform duration-200 ease-out hover:-translate-y-0.5"
         >
           Открыть приложение
         </button>
         <a
           href="/"
-          className="w-full rounded-2xl border border-line bg-white py-3.5 text-center text-[16px] font-extrabold text-ink transition-colors hover:border-orange-light"
+          className="w-full rounded-2xl border border-line bg-white py-3.5 text-center text-[16px] font-extrabold text-ink transition-colors hover:border-gold-soft"
         >
           На главную
         </a>
@@ -211,7 +211,7 @@ function ErrorCard({ onOpenApp }: { onOpenApp: () => void }) {
 
 function Chip({ title, value }: { title: string; value: string }) {
   return (
-    <div className="flex flex-col rounded-2xl bg-peach-whisper px-4 py-2.5">
+    <div className="flex flex-col rounded-2xl bg-cream px-4 py-2.5">
       <span className="text-[11px] font-bold uppercase tracking-wide text-ink-3">
         {title}
       </span>
@@ -236,7 +236,7 @@ function ItemCard({
   return (
     <div className="overflow-hidden rounded-5xl border border-hair bg-white shadow-card">
       {/* image */}
-      <div className="relative aspect-[4/5] w-full bg-peach-whisper">
+      <div className="relative aspect-[4/5] w-full bg-cream">
         {image ? (
           <img
             src={image}
@@ -245,12 +245,12 @@ function ItemCard({
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center">
-            <span className="flex h-28 w-28 items-center justify-center rounded-full bg-peach-mid text-[52px]">
+            <span className="flex h-28 w-28 items-center justify-center rounded-full bg-beige text-[52px]">
               👗
             </span>
           </div>
         )}
-        <span className="absolute left-4 top-4 rounded-full bg-emerald-500 px-3.5 py-1.5 text-[13px] font-extrabold text-white shadow-soft">
+        <span className="absolute left-4 top-4 rounded-full bg-online px-3.5 py-1.5 text-[13px] font-extrabold text-white shadow-soft">
           Бесплатно
         </span>
       </div>
@@ -258,7 +258,7 @@ function ItemCard({
       {/* body */}
       <div className="p-6">
         {meta && (
-          <span className="text-[12px] font-bold uppercase tracking-[1.4px] text-orange-dark">
+          <span className="text-[12px] font-bold uppercase tracking-[1.4px] text-gold">
             {meta}
           </span>
         )}
@@ -283,12 +283,12 @@ function ItemCard({
         )}
 
         {/* contacts-only-in-app callout */}
-        <div className="mt-6 flex items-start gap-3 rounded-2xl border border-hair bg-peach-tint px-4 py-3.5">
+        <div className="mt-6 flex items-start gap-3 rounded-2xl border border-hair bg-cream px-4 py-3.5">
           <span className="text-[20px] leading-none" aria-hidden="true">
             🔒
           </span>
           <p className="text-[14px] font-semibold text-ink-2">
-            Контакты владельца доступны только в приложении Sevil — откройте
+            Контакты владельца доступны только в приложении Tedy — откройте
             вещь там, чтобы договориться.
           </p>
         </div>
@@ -298,7 +298,7 @@ function ItemCard({
           <button
             type="button"
             onClick={onOpenInApp}
-            className="w-full rounded-2xl bg-grad-primary py-3.5 text-[16px] font-extrabold text-white shadow-glow transition-transform duration-200 ease-out hover:-translate-y-0.5"
+            className="w-full rounded-2xl bg-grad-espresso py-3.5 text-[16px] font-extrabold text-white shadow-glow transition-transform duration-200 ease-out hover:-translate-y-0.5"
           >
             Открыть в приложении
           </button>
@@ -306,7 +306,7 @@ function ItemCard({
             href={APP_STORE_URL}
             target="_blank"
             rel="noopener"
-            className="w-full rounded-2xl border border-line bg-white py-3.5 text-center text-[16px] font-extrabold text-ink transition-colors hover:border-orange-light"
+            className="w-full rounded-2xl border border-line bg-white py-3.5 text-center text-[16px] font-extrabold text-ink transition-colors hover:border-gold-soft"
           >
             Установить приложение
           </a>
@@ -314,7 +314,7 @@ function ItemCard({
             href={PLAY_STORE_URL}
             target="_blank"
             rel="noopener"
-            className="mt-0.5 text-center text-[13px] font-semibold text-ink-3 underline decoration-hair underline-offset-2 transition-colors hover:text-orange-dark"
+            className="mt-0.5 text-center text-[13px] font-semibold text-ink-3 underline decoration-hair underline-offset-2 transition-colors hover:text-gold"
           >
             Или установите из Google Play
           </a>

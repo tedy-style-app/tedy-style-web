@@ -16,7 +16,7 @@ export default function Features() {
               delay={(i % 3) as 0 | 1 | 2}
               className="group rounded-4xl border border-hair bg-white p-[30px_26px] shadow-card transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-1.5 hover:shadow-float"
             >
-              <div className="mb-5 grid h-[60px] w-[60px] place-items-center rounded-2xl bg-[linear-gradient(150deg,#FFF4EC,#FFF8F3)] text-3xl shadow-[inset_0_0_0_1px_#F0EAE4]">
+              <div className="mb-5 grid h-[60px] w-[60px] place-items-center rounded-2xl bg-grad-tile text-3xl text-espresso shadow-[inset_0_0_0_1px_#EEE8DD]">
                 {f.icon}
               </div>
               <h3 className="mb-2.5 text-[19px]">{f.title}</h3>
