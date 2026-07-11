@@ -23,6 +23,13 @@ export default function Dashboard() {
   if (state === 'error' || !data) return <ErrorState onRetry={load} />
 
   const s = data
+  // Defensive defaults — the admin must never white-screen if the deployed
+  // backend is a step behind the frontend and omits a newer stats field.
+  const activity = s.activity ?? { dau: 0, wau: 0, mau: 0 }
+  const retention = s.retention ?? { daily: 0, weekly: 0, monthly: 0 }
+  const age = s.age ?? []
+  const transactions = s.transactions ?? []
+  const buttonClicks = s.buttonClicks ?? []
   return (
     <div>
       <PageHeader title="Дашборд" subtitle="Обзор роста, транзакций и аудитории" />
@@ -54,9 +61,9 @@ export default function Dashboard() {
 
       {/* Active users */}
       <div className="mt-4 grid grid-cols-3 gap-4">
-        <StatCard label="DAU" value={s.activity.dau.toLocaleString('ru-RU')} delta="активны за 24ч" />
-        <StatCard label="WAU" value={s.activity.wau.toLocaleString('ru-RU')} delta="за 7 дней" />
-        <StatCard label="MAU" value={s.activity.mau.toLocaleString('ru-RU')} delta="за 30 дней" />
+        <StatCard label="DAU" value={activity.dau.toLocaleString('ru-RU')} delta="активны за 24ч" />
+        <StatCard label="WAU" value={activity.wau.toLocaleString('ru-RU')} delta="за 7 дней" />
+        <StatCard label="MAU" value={activity.mau.toLocaleString('ru-RU')} delta="за 30 дней" />
       </div>
 
       {/* Growth charts */}
@@ -90,14 +97,14 @@ export default function Dashboard() {
           <BarList data={s.personalization.region} color="#8C6E52" />
         </Card>
         <Card title="Возраст">
-          <BarList data={s.age} color="#5B9E5E" />
+          <BarList data={age} color="#5B9E5E" />
         </Card>
         <Card title="Удержание (возврат пользователей)">
           <div className="flex justify-between gap-3 py-3">
             {[
-              { k: 'День', v: s.retention.daily },
-              { k: 'Неделя', v: s.retention.weekly },
-              { k: 'Месяц', v: s.retention.monthly },
+              { k: 'День', v: retention.daily },
+              { k: 'Неделя', v: retention.weekly },
+              { k: 'Месяц', v: retention.monthly },
             ].map((r) => (
               <div key={r.k} className="flex-1 text-center">
                 <div className="text-2xl font-bold text-[#3E322A]">{r.v}%</div>
@@ -108,10 +115,10 @@ export default function Dashboard() {
         </Card>
         <Card title="Транзакции по статусу" className="lg:col-span-2">
           <div className="space-y-2">
-            {s.transactions.length === 0 && (
+            {transactions.length === 0 && (
               <div className="py-2 text-sm text-neutral-400">Нет транзакций</div>
             )}
-            {s.transactions.map((t) => (
+            {transactions.map((t) => (
               <div key={t.status} className="flex items-center justify-between text-sm">
                 <span className="capitalize text-neutral-700">{t.status}</span>
                 <span className="text-neutral-500">
@@ -125,10 +132,10 @@ export default function Dashboard() {
           <BarList data={s.personalization.style} color="#3E322A" />
         </Card>
         <Card title="Клики по кнопкам" className="lg:col-span-2">
-          {s.buttonClicks.length === 0 ? (
+          {buttonClicks.length === 0 ? (
             <div className="py-2 text-sm text-neutral-400">Пока нет событий</div>
           ) : (
-            <BarList data={s.buttonClicks} color="#CB9A5C" />
+            <BarList data={buttonClicks} color="#CB9A5C" />
           )}
         </Card>
       </div>
