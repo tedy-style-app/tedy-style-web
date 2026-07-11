@@ -52,6 +52,13 @@ export default function Dashboard() {
         />
       </div>
 
+      {/* Active users */}
+      <div className="mt-4 grid grid-cols-3 gap-4">
+        <StatCard label="DAU" value={s.activity.dau.toLocaleString('ru-RU')} delta="активны за 24ч" />
+        <StatCard label="WAU" value={s.activity.wau.toLocaleString('ru-RU')} delta="за 7 дней" />
+        <StatCard label="MAU" value={s.activity.mau.toLocaleString('ru-RU')} delta="за 30 дней" />
+      </div>
+
       {/* Growth charts */}
       <div className="mt-4 grid gap-4 lg:grid-cols-2">
         <Card title="Рост пользователей">
@@ -79,8 +86,40 @@ export default function Dashboard() {
         <Card title="Цветотип">
           <BarList data={s.personalization.colorType} color="#CB9A5C" />
         </Card>
-        <Card title="Регионы">
+        <Card title="Регионы (локация)">
           <BarList data={s.personalization.region} color="#8C6E52" />
+        </Card>
+        <Card title="Возраст">
+          <BarList data={s.age} color="#5B9E5E" />
+        </Card>
+        <Card title="Удержание (возврат пользователей)">
+          <div className="flex justify-between gap-3 py-3">
+            {[
+              { k: 'День', v: s.retention.daily },
+              { k: 'Неделя', v: s.retention.weekly },
+              { k: 'Месяц', v: s.retention.monthly },
+            ].map((r) => (
+              <div key={r.k} className="flex-1 text-center">
+                <div className="text-2xl font-bold text-[#3E322A]">{r.v}%</div>
+                <div className="mt-1 text-xs text-neutral-500">{r.k}</div>
+              </div>
+            ))}
+          </div>
+        </Card>
+        <Card title="Транзакции по статусу" className="lg:col-span-2">
+          <div className="space-y-2">
+            {s.transactions.length === 0 && (
+              <div className="py-2 text-sm text-neutral-400">Нет транзакций</div>
+            )}
+            {s.transactions.map((t) => (
+              <div key={t.status} className="flex items-center justify-between text-sm">
+                <span className="capitalize text-neutral-700">{t.status}</span>
+                <span className="text-neutral-500">
+                  {t.count} · {fmtMoney(t.amount, s.revenue.currency)}
+                </span>
+              </div>
+            ))}
+          </div>
         </Card>
         <Card title="Стили" className="lg:col-span-2">
           <BarList data={s.personalization.style} color="#3E322A" />

@@ -104,6 +104,10 @@ export interface Stats {
     region: Slice[]
     style: Slice[]
   }
+  activity: { dau: number; wau: number; mau: number }
+  age: Slice[]
+  retention: { daily: number; weekly: number; monthly: number }
+  transactions: { status: string; count: number; amount: number }[]
 }
 
 export interface Paged<T> {
