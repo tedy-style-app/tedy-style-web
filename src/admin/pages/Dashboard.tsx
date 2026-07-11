@@ -124,6 +124,13 @@ export default function Dashboard() {
         <Card title="Стили" className="lg:col-span-2">
           <BarList data={s.personalization.style} color="#3E322A" />
         </Card>
+        <Card title="Клики по кнопкам" className="lg:col-span-2">
+          {s.buttonClicks.length === 0 ? (
+            <div className="py-2 text-sm text-neutral-400">Пока нет событий</div>
+          ) : (
+            <BarList data={s.buttonClicks} color="#CB9A5C" />
+          )}
+        </Card>
       </div>
     </div>
   )

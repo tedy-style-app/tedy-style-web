@@ -108,6 +108,7 @@ export interface Stats {
   age: Slice[]
   retention: { daily: number; weekly: number; monthly: number }
   transactions: { status: string; count: number; amount: number }[]
+  buttonClicks: Slice[]
 }
 
 export interface Paged<T> {
