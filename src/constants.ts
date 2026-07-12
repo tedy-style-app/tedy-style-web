@@ -1,8 +1,7 @@
-// Store links — placeholders. Replace the App Store id once the listing
-// is live; Play Store uses the app's real package id.
-export const APP_STORE_URL = 'https://apps.apple.com/app/tedy-style/id000000000'
+// Store links — live listings.
+export const APP_STORE_URL = 'https://apps.apple.com/app/id6778969423'
 export const PLAY_STORE_URL =
-  'https://play.google.com/store/apps/details?id=uz.tedy.teddyMobile'
+  'https://play.google.com/store/apps/details?id=uz.tedy.teddy_mobile'
 
 // Backend API host. In production the web app and the API live on the
 // SAME origin (sevil.app + sevil.app/api), so API_BASE is empty and every
