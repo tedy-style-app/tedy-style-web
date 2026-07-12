@@ -23,6 +23,9 @@ export interface Step {
 export interface Plan {
   name: string
   tagline: string
+  price: string
+  priceUnit?: string
+  priceNote?: string
   features: string[]
   highlight?: boolean
   badge?: string
@@ -181,17 +184,21 @@ const ru: Translation = {
     eyebrow: 'ТАРИФЫ',
     title: 'Начни бесплатно',
     lead: 'Базовые возможности — навсегда бесплатны. Больше AI — на PRO и MAX.',
-    note: 'Оформление и цены — в приложении.',
+    note: 'Оплата оформляется в приложении.',
     cta: 'Открыть в приложении',
     plans: [
       {
         name: 'Free',
         tagline: 'Всё, чтобы начать',
+        price: 'Бесплатно',
         features: ['Умный гардероб', 'Образ на сегодня', 'AI-чат с базовым лимитом', 'Secondhand'],
       },
       {
         name: 'PRO',
         tagline: 'Для тех, кто хочет больше',
+        price: '39 000',
+        priceUnit: 'сум / мес',
+        priceNote: 'Первые 3 месяца — 19 000 сум/мес',
         highlight: true,
         badge: 'Популярный',
         features: ['Всё из Free', 'Больше AI-образов', 'Расширенный AI-стилист', 'Без рекламы'],
@@ -199,6 +206,8 @@ const ru: Translation = {
       {
         name: 'MAX',
         tagline: 'Максимум от Sevil',
+        price: '89 000',
+        priceUnit: 'сум / мес',
         features: ['Всё из PRO', 'Безлимитный AI-стилист', 'Приоритетная генерация', 'Ранний доступ к новому'],
       },
     ],
@@ -326,17 +335,21 @@ const uz: Translation = {
     eyebrow: 'TARIFLAR',
     title: 'Bepul boshlang',
     lead: "Asosiy imkoniyatlar — abadiy bepul. Ko'proq AI — PRO va MAX'da.",
-    note: 'Rasmiylashtirish va narxlar — ilovada.',
+    note: "To'lov ilovada rasmiylashtiriladi.",
     cta: 'Ilovada ochish',
     plans: [
       {
         name: 'Free',
         tagline: 'Boshlash uchun hammasi',
+        price: 'Bepul',
         features: ['Aqlli shkaf', 'Bugungi obraz', 'AI-chat (asosiy limit)', 'Secondhand'],
       },
       {
         name: 'PRO',
         tagline: "Ko'proq xohlaganlar uchun",
+        price: '39 000',
+        priceUnit: "so'm / oy",
+        priceNote: "Birinchi 3 oy — 19 000 so'm/oy",
         highlight: true,
         badge: 'Ommabop',
         features: ['Free dagi hammasi', "Ko'proq AI-obraz", 'Kengaytirilgan AI stilist', 'Reklamasiz'],
@@ -344,6 +357,8 @@ const uz: Translation = {
       {
         name: 'MAX',
         tagline: 'Sevil dan maksimum',
+        price: '89 000',
+        priceUnit: "so'm / oy",
         features: ['PRO dagi hammasi', 'Cheksiz AI stilist', 'Ustuvor generatsiya', 'Yangiliklarga erta kirish'],
       },
     ],
@@ -471,17 +486,21 @@ const en: Translation = {
     eyebrow: 'PRICING',
     title: 'Start for free',
     lead: 'The essentials are free forever. More AI comes with PRO and MAX.',
-    note: 'Pricing and checkout are in the app.',
+    note: 'Checkout happens in the app.',
     cta: 'Open in the app',
     plans: [
       {
         name: 'Free',
         tagline: 'Everything to get started',
+        price: 'Free',
         features: ['Smart wardrobe', 'Look of the day', 'AI chat with a basic limit', 'Secondhand'],
       },
       {
         name: 'PRO',
         tagline: 'For those who want more',
+        price: '39,000',
+        priceUnit: 'UZS / mo',
+        priceNote: 'First 3 months — 19,000 UZS/mo',
         highlight: true,
         badge: 'Popular',
         features: ['Everything in Free', 'More AI looks', 'Extended AI stylist', 'No ads'],
@@ -489,6 +508,8 @@ const en: Translation = {
       {
         name: 'MAX',
         tagline: 'The most of Sevil',
+        price: '89,000',
+        priceUnit: 'UZS / mo',
         features: ['Everything in PRO', 'Unlimited AI stylist', 'Priority generation', 'Early access to new features'],
       },
     ],

@@ -47,6 +47,22 @@ function PlanCard({ plan, cta }: { plan: Plan; cta: string }) {
         {plan.tagline}
       </p>
 
+      <div className="mt-5 flex items-baseline gap-1.5">
+        <span className={`text-[30px] font-black leading-none ${hi ? 'text-onEspresso' : 'text-ink'}`}>
+          {plan.price}
+        </span>
+        {plan.priceUnit && (
+          <span className={`text-[13px] font-semibold ${hi ? 'text-onEspresso/55' : 'text-ink-3'}`}>
+            {plan.priceUnit}
+          </span>
+        )}
+      </div>
+      {plan.priceNote && (
+        <p className={`mt-1.5 text-[12px] font-semibold ${hi ? 'text-gold-soft' : 'text-ink-3'}`}>
+          {plan.priceNote}
+        </p>
+      )}
+
       <ul className="mt-6 flex flex-1 flex-col gap-3">
         {plan.features.map((f) => (
           <li key={f} className="flex items-start gap-2.5">
