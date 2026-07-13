@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { api, setToken, ApiError } from './api'
+import { useAdminT } from './i18n'
 
 export default function Login({ onSuccess }: { onSuccess: () => void }) {
+  const t = useAdminT()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [busy, setBusy] = useState(false)
@@ -19,9 +21,9 @@ export default function Login({ onSuccess }: { onSuccess: () => void }) {
     } catch (err) {
       setBusy(false)
       if (err instanceof ApiError && err.status === 401) {
-        setError('Неверный логин или пароль')
+        setError(t('login.error.invalid'))
       } else {
-        setError('Не удалось войти. Проверьте соединение с сервером.')
+        setError(t('login.error.generic'))
       }
     }
   }
@@ -46,12 +48,12 @@ export default function Login({ onSuccess }: { onSuccess: () => void }) {
           </div>
         </div>
 
-        <h1 className="text-[22px] font-black text-ink">Вход в панель</h1>
-        <p className="mt-1 text-[14px] font-medium text-ink-2">Введите логин и пароль администратора.</p>
+        <h1 className="text-[22px] font-black text-ink">{t('login.title')}</h1>
+        <p className="mt-1 text-[14px] font-medium text-ink-2">{t('login.subtitle')}</p>
 
         <div className="mt-6 flex flex-col gap-3">
-          <Input label="Логин" value={username} onChange={setUsername} type="text" autoFocus />
-          <Input label="Пароль" value={password} onChange={setPassword} type="password" />
+          <Input label={t('login.username')} value={username} onChange={setUsername} type="text" autoFocus />
+          <Input label={t('login.password')} value={password} onChange={setPassword} type="password" />
         </div>
 
         {error && (
@@ -65,7 +67,7 @@ export default function Login({ onSuccess }: { onSuccess: () => void }) {
           disabled={busy}
           className="mt-6 w-full rounded-2xl bg-grad-espresso py-3.5 text-[15px] font-extrabold text-onEspresso shadow-glow transition-transform duration-200 ease-out hover:-translate-y-0.5 disabled:opacity-60"
         >
-          {busy ? 'Вход…' : 'Войти'}
+          {busy ? t('login.busy') : t('login.submit')}
         </button>
       </form>
     </div>

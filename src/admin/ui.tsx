@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { Sparkline } from './charts'
+import { useAdminT } from './i18n'
 import type { Point } from './api'
 
 export function Card({
@@ -96,18 +97,19 @@ export function EmptyState({ icon = '📭', title, hint }: { icon?: string; titl
 }
 
 export function ErrorState({ onRetry }: { onRetry: () => void }) {
+  const t = useAdminT()
   return (
     <div className="flex flex-col items-center gap-3 py-16 text-center">
       <div className="text-4xl">⚠️</div>
-      <div className="text-[16px] font-extrabold text-ink">Не удалось загрузить</div>
+      <div className="text-[16px] font-extrabold text-ink">{t('common.error.title')}</div>
       <div className="max-w-[360px] text-[13px] font-medium text-ink-3">
-        Проверьте, что бэкенд admin API запущен и вы авторизованы.
+        {t('common.error.body')}
       </div>
       <button
         onClick={onRetry}
         className="mt-1 rounded-full bg-grad-espresso px-5 py-2 text-[13px] font-extrabold text-onEspresso shadow-glow"
       >
-        Повторить
+        {t('common.error.retry')}
       </button>
     </div>
   )

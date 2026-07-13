@@ -15,7 +15,12 @@ const isAdmin = path === '/admin' || path.startsWith('/admin/')
 const shareMatch = path.match(/^\/s\/([^/]+)$/)
 
 function Root() {
-  if (isAdmin) return <AdminApp />
+  if (isAdmin)
+    return (
+      <LanguageProvider>
+        <AdminApp />
+      </LanguageProvider>
+    )
   if (shareMatch) return <ShareItem id={decodeURIComponent(shareMatch[1])} />
   return (
     <LanguageProvider>

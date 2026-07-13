@@ -1,17 +1,13 @@
 import { useEffect, useState } from 'react'
 import { api, type AdminNotification, type NotifAudience } from '../api'
 import { PageHeader, Spinner, ErrorState, EmptyState, Card, Badge, Pager, fmtDate } from '../ui'
+import { useAdminT } from '../i18n'
 
 const PAGE_SIZE = 20
-const AUDIENCES: { key: NotifAudience; label: string }[] = [
-  { key: 'all', label: 'Все' },
-  { key: 'free', label: 'Free' },
-  { key: 'pro', label: 'PRO' },
-  { key: 'max', label: 'MAX' },
-]
-const audienceLabel = (a: string) => AUDIENCES.find((x) => x.key === a)?.label ?? a
+const AUDIENCES: NotifAudience[] = ['all', 'free', 'pro', 'max']
 
 export default function Notifications() {
+  const t = useAdminT()
   const [page, setPage] = useState(1)
   const [rows, setRows] = useState<AdminNotification[]>([])
   const [total, setTotal] = useState(0)
@@ -32,25 +28,25 @@ export default function Notifications() {
 
   return (
     <div>
-      <PageHeader title="Уведомления" subtitle="Отправка push и in-app уведомлений пользователям" />
+      <PageHeader title={t('notifications.title')} subtitle={t('notifications.subtitle')} />
 
       <div className="grid gap-4 lg:grid-cols-[380px_1fr]">
         <Composer onSent={() => { setPage(1); load() }} />
 
         <div>
-          <h3 className="mb-3 text-[15px] font-extrabold text-ink">История рассылок</h3>
+          <h3 className="mb-3 text-[15px] font-extrabold text-ink">{t('notifications.history')}</h3>
           {state === 'loading' && <Spinner />}
           {state === 'error' && <ErrorState onRetry={load} />}
           {state === 'ready' &&
             (rows.length === 0 ? (
-              <EmptyState icon="🔔" title="Пока ничего не отправлено" />
+              <EmptyState icon="🔔" title={t('notifications.empty')} />
             ) : (
               <>
                 <div className="flex flex-col gap-3">
                   {rows.map((n) => (
                     <div key={n.id} className="rounded-4xl border border-hair bg-white p-4 shadow-card">
                       <div className="flex items-center gap-2">
-                        <Badge tone="espresso">{audienceLabel(n.audience)}</Badge>
+                        <Badge tone="espresso">{t('notifications.audience.' + n.audience)}</Badge>
                         <span className="text-[12px] font-semibold text-ink-3">📤 {n.sentCount}</span>
                         <span className="ml-auto text-[12px] font-semibold text-ink-3">{fmtDate(n.createdAt)}</span>
                       </div>
@@ -72,6 +68,7 @@ export default function Notifications() {
 }
 
 function Composer({ onSent }: { onSent: () => void }) {
+  const t = useAdminT()
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
   const [deepLink, setDeepLink] = useState('')
@@ -83,7 +80,7 @@ function Composer({ onSent }: { onSent: () => void }) {
   const send = async () => {
     if (busy) return
     if (!title.trim() || !body.trim()) {
-      setError('Заполните заголовок и текст')
+      setError(t('notifications.error.fill'))
       return
     }
     setError('')
@@ -99,57 +96,57 @@ function Composer({ onSent }: { onSent: () => void }) {
       setTitle('')
       setBody('')
       setDeepLink('')
-      setDone(`Отправлено ${n.sentCount} пользователям`)
+      setDone(t('notifications.sent', { n: n.sentCount }))
       onSent()
       setTimeout(() => setDone(''), 4000)
     } catch {
-      setError('Не удалось отправить')
+      setError(t('notifications.error.send'))
     } finally {
       setBusy(false)
     }
   }
 
   return (
-    <Card title="Новая рассылка" className="h-fit">
+    <Card title={t('notifications.composer.title')} className="h-fit">
       <div className="flex flex-col gap-3">
-        <Field label="Заголовок">
+        <Field label={t('notifications.field.title')}>
           <input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="Например: Новая коллекция ✨"
+            placeholder={t('notifications.field.titlePlaceholder')}
             className="w-full bg-transparent text-[15px] font-semibold text-ink outline-none placeholder:text-ink-3"
           />
         </Field>
-        <Field label="Текст">
+        <Field label={t('notifications.field.body')}>
           <textarea
             value={body}
             onChange={(e) => setBody(e.target.value)}
             rows={4}
-            placeholder="Короткое сообщение для пользователей…"
+            placeholder={t('notifications.field.bodyPlaceholder')}
             className="w-full resize-y bg-transparent text-[15px] font-medium leading-relaxed text-ink outline-none placeholder:text-ink-3"
           />
         </Field>
-        <Field label="Ссылка (deep link, необязательно)">
+        <Field label={t('notifications.field.deepLink')}>
           <input
             value={deepLink}
             onChange={(e) => setDeepLink(e.target.value)}
-            placeholder="sevil://…"
+            placeholder={t('notifications.field.deepLinkPlaceholder')}
             className="w-full bg-transparent text-[14px] font-semibold text-ink outline-none placeholder:text-ink-3"
           />
         </Field>
 
         <div>
-          <div className="mb-2 text-[11px] font-bold uppercase tracking-wide text-ink-3">Аудитория</div>
+          <div className="mb-2 text-[11px] font-bold uppercase tracking-wide text-ink-3">{t('notifications.audienceLabel')}</div>
           <div className="flex flex-wrap gap-2">
             {AUDIENCES.map((a) => (
               <button
-                key={a.key}
-                onClick={() => setAudience(a.key)}
+                key={a}
+                onClick={() => setAudience(a)}
                 className={`rounded-full px-3.5 py-1.5 text-[13px] font-extrabold transition-colors ${
-                  audience === a.key ? 'bg-espresso text-onEspresso' : 'border border-line bg-white text-ink-2'
+                  audience === a ? 'bg-espresso text-onEspresso' : 'border border-line bg-white text-ink-2'
                 }`}
               >
-                {a.label}
+                {t('notifications.audience.' + a)}
               </button>
             ))}
           </div>
@@ -163,7 +160,7 @@ function Composer({ onSent }: { onSent: () => void }) {
           disabled={busy}
           className="mt-1 w-full rounded-2xl bg-grad-espresso py-3 text-[15px] font-extrabold text-onEspresso shadow-glow disabled:opacity-50"
         >
-          {busy ? 'Отправка…' : 'Отправить'}
+          {busy ? t('notifications.busy') : t('notifications.send')}
         </button>
       </div>
     </Card>

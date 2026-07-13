@@ -1,4 +1,5 @@
 import type { Point, Slice } from './api'
+import { useAdminT } from './i18n'
 
 /** Smooth-ish area + line chart drawn as inline SVG (no chart library). */
 export function LineChart({
@@ -128,12 +129,13 @@ export function Donut({
 }
 
 function ChartEmpty({ height }: { height: number }) {
+  const t = useAdminT()
   return (
     <div
       className="flex items-center justify-center rounded-2xl bg-beige-soft text-[13px] font-semibold text-ink-3"
       style={{ height }}
     >
-      Нет данных
+      {t('chart.empty')}
     </div>
   )
 }

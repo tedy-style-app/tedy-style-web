@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import { getToken, clearToken } from './api'
+import { useLang, type Lang } from '../i18n'
+import { useAdminT } from './i18n'
 import Login from './Login'
 import Dashboard from './pages/Dashboard'
 import Users from './pages/Users'
@@ -10,14 +12,34 @@ import Cms from './pages/Cms'
 
 type Section = 'dashboard' | 'users' | 'transactions' | 'support' | 'notifications' | 'cms'
 
-const NAV: { key: Section; label: string; icon: string }[] = [
-  { key: 'dashboard', label: 'Дашборд', icon: '▚' },
-  { key: 'users', label: 'Пользователи', icon: '☺' },
-  { key: 'transactions', label: 'Транзакции', icon: '▤' },
-  { key: 'support', label: 'Поддержка', icon: '✉' },
-  { key: 'notifications', label: 'Уведомления', icon: '🔔' },
-  { key: 'cms', label: 'CMS', icon: '✎' },
+const NAV: { key: Section; icon: string }[] = [
+  { key: 'dashboard', icon: '▚' },
+  { key: 'users', icon: '☺' },
+  { key: 'transactions', icon: '▤' },
+  { key: 'support', icon: '✉' },
+  { key: 'notifications', icon: '🔔' },
+  { key: 'cms', icon: '✎' },
 ]
+
+/** Compact RU / UZ / EN segmented switcher, styled for the espresso chrome. */
+function LangSwitch({ className = '' }: { className?: string }) {
+  const { lang, setLang } = useLang()
+  return (
+    <div className={`inline-flex gap-1 rounded-full bg-white/[0.08] p-1 ${className}`}>
+      {(['ru', 'uz', 'en'] as Lang[]).map((l) => (
+        <button
+          key={l}
+          onClick={() => setLang(l)}
+          className={`rounded-full px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-wide transition-colors ${
+            lang === l ? 'bg-white/[0.18] text-onEspresso' : 'text-onEspresso/50 hover:text-onEspresso'
+          }`}
+        >
+          {l}
+        </button>
+      ))}
+    </div>
+  )
+}
 
 const SECTION_KEYS = NAV.map((n) => n.key)
 function sectionFromPath(): Section {
@@ -27,6 +49,7 @@ function sectionFromPath(): Section {
 }
 
 export default function AdminApp() {
+  const t = useAdminT()
   const [authed, setAuthed] = useState(!!getToken())
   const [section, setSectionState] = useState<Section>(sectionFromPath)
 
@@ -78,18 +101,21 @@ export default function AdminApp() {
               }`}
             >
               <span className="w-5 text-center text-[15px]">{n.icon}</span>
-              {n.label}
+              {t('nav.' + n.key)}
             </button>
           ))}
         </nav>
 
-        <button
-          onClick={logout}
-          className="mt-auto flex items-center gap-3 rounded-2xl px-3.5 py-2.5 text-[14px] font-bold text-onEspresso/60 transition-colors hover:bg-white/[0.06] hover:text-onEspresso"
-        >
-          <span className="w-5 text-center text-[15px]">⇥</span>
-          Выйти
-        </button>
+        <div className="mt-auto flex flex-col gap-2">
+          <LangSwitch className="w-full justify-between" />
+          <button
+            onClick={logout}
+            className="flex items-center gap-3 rounded-2xl px-3.5 py-2.5 text-[14px] font-bold text-onEspresso/60 transition-colors hover:bg-white/[0.06] hover:text-onEspresso"
+          >
+            <span className="w-5 text-center text-[15px]">⇥</span>
+            {t('nav.logout')}
+          </button>
+        </div>
       </aside>
 
       {/* Mobile top bar */}
@@ -104,12 +130,13 @@ export default function AdminApp() {
                 section === n.key ? 'bg-white/[0.16] text-onEspresso' : 'text-onEspresso/60'
               }`}
             >
-              {n.label}
+              {t('nav.' + n.key)}
             </button>
           ))}
           <button onClick={logout} className="shrink-0 rounded-full px-3 py-1.5 text-[13px] font-extrabold text-onEspresso/60">
-            Выйти
+            {t('nav.logout')}
           </button>
+          <LangSwitch className="ml-auto shrink-0" />
         </header>
 
         <main className="mx-auto w-full max-w-[1080px] flex-1 p-5 md:p-8">
