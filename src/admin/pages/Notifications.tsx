@@ -6,6 +6,15 @@ import { useAdminT } from '../i18n'
 const PAGE_SIZE = 20
 const AUDIENCES: NotifAudience[] = ['all', 'free', 'pro', 'max']
 
+type LangCode = 'uz' | 'ru' | 'en'
+const LANGS: LangCode[] = ['uz', 'ru', 'en']
+type LangText = { title: string; body: string }
+const emptyText = (): Record<LangCode, LangText> => ({
+  uz: { title: '', body: '' },
+  ru: { title: '', body: '' },
+  en: { title: '', body: '' },
+})
+
 export default function Notifications() {
   const t = useAdminT()
   const [page, setPage] = useState(1)
@@ -69,17 +78,24 @@ export default function Notifications() {
 
 function Composer({ onSent }: { onSent: () => void }) {
   const t = useAdminT()
-  const [title, setTitle] = useState('')
-  const [body, setBody] = useState('')
+  const [lang, setLang] = useState<LangCode>('uz')
+  const [text, setText] = useState<Record<LangCode, LangText>>(emptyText)
   const [deepLink, setDeepLink] = useState('')
   const [audience, setAudience] = useState<NotifAudience>('all')
   const [busy, setBusy] = useState(false)
   const [done, setDone] = useState('')
   const [error, setError] = useState('')
 
+  const cur = text[lang]
+  const setCur = (patch: Partial<LangText>) =>
+    setText((prev) => ({ ...prev, [lang]: { ...prev[lang], ...patch } }))
+  const filled = (l: LangCode) => text[l].title.trim() !== '' && text[l].body.trim() !== ''
+
   const send = async () => {
     if (busy) return
-    if (!title.trim() || !body.trim()) {
+    // Uzbek is the primary/fallback language — it must be filled.
+    if (!filled('uz')) {
+      setLang('uz')
       setError(t('notifications.error.fill'))
       return
     }
@@ -88,14 +104,18 @@ function Composer({ onSent }: { onSent: () => void }) {
     setBusy(true)
     try {
       const n = await api.sendNotification({
-        title: title.trim(),
-        body: body.trim(),
+        title: text.uz.title.trim(),
+        body: text.uz.body.trim(),
+        titleRu: text.ru.title.trim() || undefined,
+        bodyRu: text.ru.body.trim() || undefined,
+        titleEn: text.en.title.trim() || undefined,
+        bodyEn: text.en.body.trim() || undefined,
         audience,
         deepLink: deepLink.trim() || undefined,
       })
-      setTitle('')
-      setBody('')
+      setText(emptyText())
       setDeepLink('')
+      setLang('uz')
       setDone(t('notifications.sent', { n: n.sentCount }))
       onSent()
       setTimeout(() => setDone(''), 4000)
@@ -109,23 +129,53 @@ function Composer({ onSent }: { onSent: () => void }) {
   return (
     <Card title={t('notifications.composer.title')} className="h-fit">
       <div className="flex flex-col gap-3">
+        <div className="rounded-2xl bg-cream px-3 py-2 text-[12px] font-semibold text-ink-2">
+          🌐 {t('notifications.langBadge')}
+        </div>
+
+        <div>
+          <div className="mb-2 text-[11px] font-bold uppercase tracking-wide text-ink-3">{t('notifications.langLabel')}</div>
+          <div className="flex flex-wrap gap-2">
+            {LANGS.map((l) => (
+              <button
+                key={l}
+                onClick={() => setLang(l)}
+                className={`flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[13px] font-extrabold transition-colors ${
+                  lang === l ? 'bg-espresso text-onEspresso' : 'border border-line bg-white text-ink-2'
+                }`}
+              >
+                {t('notifications.lang.' + l)}
+                {l === 'uz' ? (
+                  <span className="opacity-70">*</span>
+                ) : (
+                  filled(l) && <span className="h-1.5 w-1.5 rounded-full bg-online" />
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+
         <Field label={t('notifications.field.title')}>
           <input
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            value={cur.title}
+            onChange={(e) => setCur({ title: e.target.value })}
             placeholder={t('notifications.field.titlePlaceholder')}
             className="w-full bg-transparent text-[15px] font-semibold text-ink outline-none placeholder:text-ink-3"
           />
         </Field>
         <Field label={t('notifications.field.body')}>
           <textarea
-            value={body}
-            onChange={(e) => setBody(e.target.value)}
+            value={cur.body}
+            onChange={(e) => setCur({ body: e.target.value })}
             rows={4}
             placeholder={t('notifications.field.bodyPlaceholder')}
             className="w-full resize-y bg-transparent text-[15px] font-medium leading-relaxed text-ink outline-none placeholder:text-ink-3"
           />
         </Field>
+        <div className="-mt-1 text-[12px] font-medium text-ink-3">
+          {lang === 'uz' ? t('notifications.lang.uzHint') : t('notifications.lang.fallbackHint')}
+        </div>
+
         <Field label={t('notifications.field.deepLink')}>
           <input
             value={deepLink}

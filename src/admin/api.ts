@@ -186,10 +186,16 @@ export interface AdminNotification {
 }
 
 export interface SendNotification {
+  // Primary (Uzbek) text — required; also the fallback for any language left blank.
   title: string
   body: string
   audience: NotifAudience
   deepLink?: string
+  // Optional per-language overrides; each user gets the text for their active app language.
+  titleRu?: string
+  bodyRu?: string
+  titleEn?: string
+  bodyEn?: string
 }
 
 // ---- Endpoints ----------------------------------------------------------
