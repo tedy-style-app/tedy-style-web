@@ -22,6 +22,7 @@ const dict = {
   'nav.transactions': { ru: 'Транзакции', uz: 'Tranzaksiyalar', en: 'Transactions' },
   'nav.support': { ru: 'Поддержка', uz: "Qo'llab-quvvatlash", en: 'Support' },
   'nav.notifications': { ru: 'Уведомления', uz: 'Bildirishnomalar', en: 'Notifications' },
+  'nav.blogs': { ru: 'Блог', uz: 'Blog', en: 'Blog' },
   'nav.cms': { ru: 'CMS', uz: 'CMS', en: 'CMS' },
   'nav.logout': { ru: 'Выйти', uz: 'Chiqish', en: 'Log out' },
 
@@ -211,6 +212,111 @@ const dict = {
   'notifications.sent': { ru: 'Отправлено {n} пользователям', uz: '{n} foydalanuvchiga yuborildi', en: 'Sent to {n} users' },
   'notifications.busy': { ru: 'Отправка…', uz: 'Yuborilmoqda…', en: 'Sending…' },
   'notifications.send': { ru: 'Отправить', uz: 'Yuborish', en: 'Send' },
+
+  // ---- Blogs ----
+  'blogs.title': { ru: 'Блог', uz: 'Blog', en: 'Blog' },
+  'blogs.subtitle': {
+    ru: 'Статьи и новости приложения',
+    uz: 'Ilova maqolalari va yangiliklari',
+    en: 'Articles and app news',
+  },
+  'blogs.list.heading': { ru: 'Все записи · {n}', uz: 'Barcha yozuvlar · {n}', en: 'All posts · {n}' },
+  'blogs.empty.title': { ru: 'Записей пока нет', uz: "Hozircha yozuvlar yo'q", en: 'No posts yet' },
+  'blogs.empty.hint': {
+    ru: 'Создайте первую статью в форме справа.',
+    uz: "O'ngdagi formada birinchi maqolani yarating.",
+    en: 'Create your first article in the form on the right.',
+  },
+  'blogs.new': { ru: '+ Новая запись', uz: '+ Yangi yozuv', en: '+ New post' },
+  // Editor
+  'blogs.editor.create': { ru: 'Новая запись', uz: 'Yangi yozuv', en: 'New post' },
+  'blogs.editor.edit': { ru: 'Редактирование записи', uz: 'Yozuvni tahrirlash', en: 'Edit post' },
+  'blogs.field.title': { ru: 'Заголовок', uz: 'Sarlavha', en: 'Title' },
+  'blogs.field.titlePlaceholder': { ru: 'Название статьи', uz: 'Maqola nomi', en: 'Article title' },
+  'blogs.field.excerpt': { ru: 'Краткое описание (необязательно)', uz: 'Qisqacha tavsif (ixtiyoriy)', en: 'Excerpt (optional)' },
+  'blogs.field.excerptPlaceholder': {
+    ru: 'Короткий анонс для карточки…',
+    uz: 'Karta uchun qisqa anons…',
+    en: 'A short teaser for the card…',
+  },
+  'blogs.field.author': { ru: 'Автор (необязательно)', uz: 'Muallif (ixtiyoriy)', en: 'Author (optional)' },
+  'blogs.field.authorPlaceholder': { ru: 'Имя автора', uz: 'Muallif ismi', en: 'Author name' },
+  'blogs.field.body': { ru: 'Текст статьи (Markdown)', uz: 'Maqola matni (Markdown)', en: 'Body (Markdown)' },
+  'blogs.field.bodyPlaceholder': {
+    ru: 'Напишите статью в формате Markdown…',
+    uz: 'Maqolani Markdown formatida yozing…',
+    en: 'Write the article in Markdown…',
+  },
+  'blogs.field.cover': { ru: 'Обложка', uz: 'Muqova', en: 'Cover image' },
+  // Cover controls
+  'blogs.cover.add': { ru: 'Загрузить обложку', uz: 'Muqova yuklash', en: 'Upload cover' },
+  'blogs.cover.change': { ru: 'Заменить', uz: "O'zgartirish", en: 'Replace' },
+  'blogs.cover.remove': { ru: 'Удалить', uz: "O'chirish", en: 'Remove' },
+  'blogs.cover.uploading': { ru: 'Загрузка обложки…', uz: 'Muqova yuklanmoqda…', en: 'Uploading cover…' },
+  'blogs.cover.error': { ru: 'Не удалось загрузить изображение', uz: "Rasmni yuklab bo'lmadi", en: 'Failed to upload the image' },
+  'blogs.cover.alt': { ru: 'Обложка', uz: 'Muqova', en: 'Cover' },
+  // Write / Preview
+  'blogs.tab.write': { ru: 'Текст', uz: 'Matn', en: 'Write' },
+  'blogs.tab.preview': { ru: 'Предпросмотр', uz: "Ko'rib chiqish", en: 'Preview' },
+  'blogs.preview.empty': {
+    ru: 'Начните печатать, чтобы увидеть предпросмотр.',
+    uz: "Ko'rib chiqishni ko'rish uchun matn tering.",
+    en: 'Start typing to see the preview.',
+  },
+  // Markdown toolbar (tooltips)
+  'blogs.toolbar.h2': { ru: 'Заголовок', uz: 'Sarlavha', en: 'Heading' },
+  'blogs.toolbar.bold': { ru: 'Жирный', uz: 'Qalin', en: 'Bold' },
+  'blogs.toolbar.italic': { ru: 'Курсив', uz: 'Kursiv', en: 'Italic' },
+  'blogs.toolbar.list': { ru: 'Список', uz: "Ro'yxat", en: 'List' },
+  'blogs.toolbar.quote': { ru: 'Цитата', uz: 'Iqtibos', en: 'Quote' },
+  'blogs.toolbar.link': { ru: 'Ссылка', uz: 'Havola', en: 'Link' },
+  // Markdown toolbar (inserted placeholder text)
+  'blogs.insert.heading': { ru: 'Заголовок', uz: 'Sarlavha', en: 'Heading' },
+  'blogs.insert.bold': { ru: 'жирный текст', uz: 'qalin matn', en: 'bold text' },
+  'blogs.insert.italic': { ru: 'курсив', uz: 'kursiv matn', en: 'italic text' },
+  'blogs.insert.list': { ru: 'Пункт списка', uz: "Ro'yxat bandi", en: 'List item' },
+  'blogs.insert.quote': { ru: 'Цитата', uz: 'Iqtibos', en: 'Quote' },
+  'blogs.insert.link': { ru: 'текст ссылки', uz: 'havola matni', en: 'link text' },
+  // Publish + status
+  'blogs.publishToggle': { ru: 'Опубликовать', uz: 'Chop etish', en: 'Publish' },
+  'blogs.publishHint': {
+    ru: 'Опубликованные записи видны в приложении.',
+    uz: 'Chop etilgan yozuvlar ilovada ko‘rinadi.',
+    en: 'Published posts are visible in the app.',
+  },
+  'blogs.status.published': { ru: 'Опубликовано', uz: 'Chop etilgan', en: 'Published' },
+  'blogs.status.draft': { ru: 'Черновик', uz: 'Qoralama', en: 'Draft' },
+  // Row actions
+  'blogs.action.edit': { ru: 'Изменить', uz: 'Tahrirlash', en: 'Edit' },
+  'blogs.action.publish': { ru: 'Опубликовать', uz: 'Chop etish', en: 'Publish' },
+  'blogs.action.unpublish': { ru: 'Снять с публикации', uz: 'Chop etishni bekor qilish', en: 'Unpublish' },
+  'blogs.action.delete': { ru: 'Удалить', uz: "O'chirish", en: 'Delete' },
+  'blogs.action.save': { ru: 'Сохранить', uz: 'Saqlash', en: 'Save' },
+  'blogs.action.saving': { ru: 'Сохранение…', uz: 'Saqlanmoqda…', en: 'Saving…' },
+  'blogs.action.cancel': { ru: 'Отмена', uz: 'Bekor qilish', en: 'Cancel' },
+  'blogs.saved': { ru: 'Сохранено ✓', uz: 'Saqlandi ✓', en: 'Saved ✓' },
+  'blogs.error.required': {
+    ru: 'Заполните заголовок и текст статьи',
+    uz: "Sarlavha va maqola matnini to'ldiring",
+    en: 'Fill in the title and the body',
+  },
+  'blogs.error.save': { ru: 'Не удалось сохранить', uz: "Saqlab bo'lmadi", en: 'Failed to save' },
+  'blogs.confirmDelete': {
+    ru: 'Удалить эту запись безвозвратно?',
+    uz: 'Bu yozuv butunlay o‘chirilsinmi?',
+    en: 'Delete this post permanently?',
+  },
+  // Crop dialog
+  'blogs.crop.title': { ru: 'Кадрировать обложку', uz: 'Muqovani kesish', en: 'Crop cover' },
+  'blogs.crop.hint': {
+    ru: 'Перетаскивайте и масштабируйте. Формат 16:9.',
+    uz: 'Suring va masshtablang. Format 16:9.',
+    en: 'Drag and zoom. 16:9 aspect ratio.',
+  },
+  'blogs.crop.zoom': { ru: 'Масштаб', uz: 'Masshtab', en: 'Zoom' },
+  'blogs.crop.apply': { ru: 'Применить', uz: 'Qo‘llash', en: 'Apply' },
+  'blogs.crop.applying': { ru: 'Загрузка…', uz: 'Yuklanmoqda…', en: 'Uploading…' },
+  'blogs.crop.cancel': { ru: 'Отмена', uz: 'Bekor qilish', en: 'Cancel' },
 
   // ---- CMS ----
   'cms.title': { ru: 'CMS', uz: 'CMS', en: 'CMS' },

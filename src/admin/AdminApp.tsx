@@ -8,9 +8,10 @@ import Users from './pages/Users'
 import Transactions from './pages/Transactions'
 import Support from './pages/Support'
 import Notifications from './pages/Notifications'
+import Blogs from './pages/Blogs'
 import Cms from './pages/Cms'
 
-type Section = 'dashboard' | 'users' | 'transactions' | 'support' | 'notifications' | 'cms'
+type Section = 'dashboard' | 'users' | 'transactions' | 'support' | 'notifications' | 'blogs' | 'cms'
 
 const NAV: { key: Section; icon: string }[] = [
   { key: 'dashboard', icon: '▚' },
@@ -18,6 +19,7 @@ const NAV: { key: Section; icon: string }[] = [
   { key: 'transactions', icon: '▤' },
   { key: 'support', icon: '✉' },
   { key: 'notifications', icon: '🔔' },
+  { key: 'blogs', icon: '📝' },
   { key: 'cms', icon: '✎' },
 ]
 
@@ -145,6 +147,7 @@ export default function AdminApp() {
           {section === 'transactions' && <Transactions />}
           {section === 'support' && <Support />}
           {section === 'notifications' && <Notifications />}
+          {section === 'blogs' && <Blogs />}
           {section === 'cms' && <Cms />}
         </main>
       </div>

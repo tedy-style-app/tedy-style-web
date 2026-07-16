@@ -198,6 +198,28 @@ export interface SendNotification {
   bodyEn?: string
 }
 
+export interface AdminBlog {
+  id: string
+  title: string
+  excerpt: string
+  contentMarkdown: string
+  coverImageUrl: string | null
+  authorName: string
+  isPublished: boolean
+  publishedAt: string | null
+  createdAt: string
+  updatedAt: string | null
+}
+
+export interface SaveBlog {
+  title: string
+  excerpt?: string
+  contentMarkdown: string
+  coverImageUrl?: string
+  authorName?: string
+  isPublished: boolean
+}
+
 // ---- Endpoints ----------------------------------------------------------
 
 export const api = {
@@ -227,6 +249,43 @@ export const api = {
     request<Paged<AdminNotification>>(`/notifications?page=${page}&pageSize=${pageSize}`),
   sendNotification: (payload: SendNotification) =>
     request<AdminNotification>('/notifications', { method: 'POST', body: payload }),
+  blogs: (page: number, pageSize = 20) =>
+    request<Paged<AdminBlog>>(`/blogs?page=${page}&pageSize=${pageSize}`),
+  blog: (id: string) => request<AdminBlog>(`/blogs/${id}`),
+  createBlog: (payload: SaveBlog) =>
+    request<AdminBlog>('/blogs', { method: 'POST', body: payload }),
+  updateBlog: (id: string, payload: SaveBlog) =>
+    request<AdminBlog>(`/blogs/${id}`, { method: 'PUT', body: payload }),
+  publishBlog: (id: string, isPublished: boolean) =>
+    request<AdminBlog>(`/blogs/${id}/publish`, { method: 'PATCH', body: { isPublished } }),
+  deleteBlog: (id: string) => request<void>(`/blogs/${id}`, { method: 'DELETE' }),
+}
+
+/**
+ * Uploads a blog cover image via multipart/form-data (field name `image`).
+ * Uses raw fetch because `request()` is JSON-only; the browser sets the
+ * multipart boundary, so we must NOT set Content-Type ourselves.
+ */
+export async function uploadBlogImage(file: Blob): Promise<{ url: string }> {
+  const token = getToken()
+  const formData = new FormData()
+  formData.append('image', file, 'cover.jpg')
+  const res = await fetch(`${API_BASE}/api/admin/blogs/upload`, {
+    method: 'POST',
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+    body: formData,
+  })
+  if (res.status === 401) {
+    clearToken()
+    try {
+      window.dispatchEvent(new Event('sevil-admin-logout'))
+    } catch {
+      /* non-browser env */
+    }
+    throw new ApiError(401, 'Unauthorized')
+  }
+  if (!res.ok) throw new ApiError(res.status, `HTTP ${res.status}`)
+  return (await res.json()) as { url: string }
 }
 
 // Absolute URL for a possibly-relative stored image path.
