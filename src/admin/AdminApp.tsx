@@ -5,17 +5,30 @@ import { useAdminT } from './i18n'
 import Login from './Login'
 import Dashboard from './pages/Dashboard'
 import Users from './pages/Users'
+import Clicks from './pages/Clicks'
+import Personalization from './pages/Personalization'
 import Transactions from './pages/Transactions'
 import Support from './pages/Support'
 import Notifications from './pages/Notifications'
 import Blogs from './pages/Blogs'
 import Cms from './pages/Cms'
 
-type Section = 'dashboard' | 'users' | 'transactions' | 'support' | 'notifications' | 'blogs' | 'cms'
+type Section =
+  | 'dashboard'
+  | 'users'
+  | 'personalization'
+  | 'clicks'
+  | 'transactions'
+  | 'support'
+  | 'notifications'
+  | 'blogs'
+  | 'cms'
 
 const NAV: { key: Section; icon: string }[] = [
   { key: 'dashboard', icon: '▚' },
   { key: 'users', icon: '☺' },
+  { key: 'personalization', icon: '🎨' },
+  { key: 'clicks', icon: '🖱' },
   { key: 'transactions', icon: '▤' },
   { key: 'support', icon: '✉' },
   { key: 'notifications', icon: '🔔' },
@@ -144,6 +157,8 @@ export default function AdminApp() {
         <main className="mx-auto w-full max-w-[1080px] flex-1 p-5 md:p-8">
           {section === 'dashboard' && <Dashboard />}
           {section === 'users' && <Users />}
+          {section === 'personalization' && <Personalization />}
+          {section === 'clicks' && <Clicks />}
           {section === 'transactions' && <Transactions />}
           {section === 'support' && <Support />}
           {section === 'notifications' && <Notifications />}

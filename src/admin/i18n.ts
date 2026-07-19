@@ -19,6 +19,8 @@ const dict = {
   // ---- Shell / navigation ----
   'nav.dashboard': { ru: 'Дашборд', uz: 'Boshqaruv paneli', en: 'Dashboard' },
   'nav.users': { ru: 'Пользователи', uz: 'Foydalanuvchilar', en: 'Users' },
+  'nav.personalization': { ru: 'Персонализация', uz: 'Personalizatsiya', en: 'Personalization' },
+  'nav.clicks': { ru: 'Клики по кнопкам', uz: 'Tugma bosishlari', en: 'Click buttons' },
   'nav.transactions': { ru: 'Транзакции', uz: 'Tranzaksiyalar', en: 'Transactions' },
   'nav.support': { ru: 'Поддержка', uz: "Qo'llab-quvvatlash", en: 'Support' },
   'nav.notifications': { ru: 'Уведомления', uz: 'Bildirishnomalar', en: 'Notifications' },
@@ -36,6 +38,7 @@ const dict = {
   },
   'common.error.retry': { ru: 'Повторить', uz: 'Qayta urinish', en: 'Retry' },
   'chart.empty': { ru: 'Нет данных', uz: "Ma'lumot yo'q", en: 'No data' },
+  'daterange.days': { ru: '{n}д', uz: '{n} kun', en: '{n}d' },
 
   // ---- Login ----
   'login.error.invalid': {
@@ -96,9 +99,32 @@ const dict = {
   'dashboard.chart.styles': { ru: 'Стили', uz: 'Uslublar', en: 'Styles' },
   'dashboard.chart.buttonClicks': { ru: 'Клики по кнопкам', uz: 'Tugmalar bosishlari', en: 'Button clicks' },
   'dashboard.noEvents': { ru: 'Пока нет событий', uz: "Hozircha hodisalar yo'q", en: 'No events yet' },
+  // Section headings
+  'dashboard.section.growth': { ru: 'Рост пользователей', uz: "Foydalanuvchilar o'sishi", en: 'User growth' },
+  'dashboard.section.audience': { ru: 'Аудитория и активность', uz: 'Auditoriya va faollik', en: 'Audience & activity' },
+  'dashboard.section.money': { ru: 'Подписки и транзакции', uz: 'Obunalar va tranzaksiyalar', en: 'Subscriptions & transactions' },
+  // Users-count container
+  'dashboard.usersCount': { ru: 'Пользователи', uz: 'Foydalanuvchilar', en: 'Users' },
+  'dashboard.usersTotal': { ru: 'всего', uz: 'jami', en: 'total' },
+  'dashboard.usersNew': { ru: 'новых за период', uz: 'davr uchun yangi', en: 'new in range' },
+  // DAU/WAU/MAU container + modal
+  'dashboard.activity.title': { ru: 'Активные пользователи', uz: 'Faol foydalanuvchilar', en: 'Active users' },
+  'dashboard.activity.open': { ru: 'Открыть графики →', uz: 'Grafiklarni ochish →', en: 'Open charts →' },
+  'dashboard.activity.note': {
+    ru: 'Данные отражают отслеживаемую активность за выбранный период.',
+    uz: "Ma'lumotlar tanlangan davr uchun kuzatilgan faollikni aks ettiradi.",
+    en: 'Figures reflect tracked activity over the selected range.',
+  },
 
   // ---- Users ----
   'users.title': { ru: 'Пользователи', uz: 'Foydalanuvchilar', en: 'Users' },
+  'users.subtitle': {
+    ru: 'Список пользователей и аудитория',
+    uz: "Foydalanuvchilar ro'yxati va auditoriya",
+    en: 'User list and audience',
+  },
+  'users.tab.list': { ru: 'Пользователи', uz: 'Foydalanuvchilar', en: 'Users' },
+  'users.tab.auditory': { ru: 'Аудитория', uz: 'Auditoriya', en: 'Auditory' },
   'users.searchPlaceholder': {
     ru: 'Поиск по имени / @username',
     uz: "Ism / @username bo'yicha qidirish",
@@ -126,6 +152,39 @@ const dict = {
   'users.info.bio': { ru: 'О себе', uz: "O'zi haqida", en: 'About' },
   'users.styles.heading': { ru: 'Сгенерированные образы · {n}', uz: 'Yaratilgan obrazlar · {n}', en: 'Generated looks · {n}' },
   'users.styles.empty': { ru: 'Пока нет образов', uz: "Hozircha obrazlar yo'q", en: 'No looks yet' },
+
+  // ---- Clicks (Click buttons) ----
+  'clicks.title': { ru: 'Клики по кнопкам', uz: 'Tugma bosishlari', en: 'Click buttons' },
+  'clicks.subtitle': {
+    ru: 'Как часто нажимают отслеживаемые кнопки в приложении',
+    uz: 'Ilovadagi kuzatiladigan tugmalar qanchalik tez bosiladi',
+    en: 'How often tracked in-app buttons are tapped',
+  },
+
+  // ---- Personalization ----
+  'personalization.title': { ru: 'Персонализация', uz: 'Personalizatsiya', en: 'Personalization' },
+  'personalization.subtitle': {
+    ru: 'Стили, цветотип и ответы пользователей',
+    uz: 'Uslublar, rang turi va foydalanuvchi javoblari',
+    en: 'Styles, color type and user answers',
+  },
+  'personalization.searchPlaceholder': {
+    ru: 'Поиск по имени / @username',
+    uz: "Ism / @username bo'yicha qidirish",
+    en: 'Search by name / @username',
+  },
+  'personalization.empty': { ru: 'Ответов пока нет', uz: "Hozircha javoblar yo'q", en: 'No answers yet' },
+  'personalization.col.country': { ru: 'Страна', uz: 'Davlat', en: 'Country' },
+  'personalization.drawer.title': { ru: 'Ответы пользователя', uz: 'Foydalanuvchi javoblari', en: 'User answers' },
+  'personalization.info.country': { ru: 'Страна', uz: 'Davlat', en: 'Country' },
+  'personalization.info.city': { ru: 'Город', uz: 'Shahar', en: 'City' },
+  'personalization.info.weight': { ru: 'Вес', uz: 'Vazn', en: 'Weight' },
+  'personalization.info.weightValue': { ru: '{n} кг', uz: '{n} kg', en: '{n} kg' },
+  'personalization.info.hijab': { ru: 'Хиджаб', uz: 'Hijob', en: 'Hijab' },
+  'personalization.info.styles': { ru: 'Стили', uz: 'Uslublar', en: 'Styles' },
+  'personalization.info.painPoints': { ru: 'Проблемы / боли', uz: 'Muammolar', en: 'Pain points' },
+  'personalization.value.yes': { ru: 'Да', uz: 'Ha', en: 'Yes' },
+  'personalization.value.no': { ru: 'Нет', uz: "Yo'q", en: 'No' },
 
   // ---- Transactions ----
   'transactions.title': { ru: 'Транзакции', uz: 'Tranzaksiyalar', en: 'Transactions' },
@@ -206,6 +265,20 @@ const dict = {
   },
   'notifications.field.deepLink': { ru: 'Ссылка (deep link, необязательно)', uz: 'Havola (deep link, ixtiyoriy)', en: 'Link (deep link, optional)' },
   'notifications.field.deepLinkPlaceholder': { ru: 'sevil://…', uz: 'sevil://…', en: 'sevil://…' },
+  // Destination picker
+  'notifications.link.label': { ru: 'Кнопка / переход', uz: 'Tugma / oʻtish', en: 'Button / destination' },
+  'notifications.link.none': { ru: 'Без кнопки', uz: 'Tugmasiz', en: 'No button' },
+  'notifications.link.aiChat': { ru: 'AI-чат', uz: 'AI chat', en: 'AI Chat' },
+  'notifications.link.secondhand': { ru: 'Секонд-хенд', uz: 'Sekond-xend', en: 'Secondhand' },
+  'notifications.link.pro': { ru: 'Тариф PRO', uz: 'PRO tarifi', en: 'PRO plan' },
+  'notifications.link.blogs': { ru: 'Блог', uz: 'Blog', en: 'Blogs' },
+  'notifications.link.home': { ru: 'Главная', uz: 'Bosh sahifa', en: 'Home' },
+  'notifications.link.custom': { ru: 'Своя ссылка…', uz: 'Boshqa havola…', en: 'Custom…' },
+  'notifications.link.hint': {
+    ru: 'Станет кнопкой в уведомлении и откроет выбранный раздел приложения.',
+    uz: 'Bildirishnomada tugmaga aylanadi va tanlangan ilova boʻlimini ochadi.',
+    en: 'Becomes a tappable button in the notification that opens the chosen section of the app.',
+  },
   'notifications.audienceLabel': { ru: 'Аудитория', uz: 'Auditoriya', en: 'Audience' },
   'notifications.error.fill': { ru: 'Заполните заголовок и текст', uz: "Sarlavha va matnni to'ldiring", en: 'Fill in the title and text' },
   'notifications.error.send': { ru: 'Не удалось отправить', uz: "Yuborib bo'lmadi", en: 'Failed to send' },
@@ -228,6 +301,21 @@ const dict = {
     en: 'Create your first article in the form on the right.',
   },
   'blogs.new': { ru: '+ Новая запись', uz: '+ Yangi yozuv', en: '+ New post' },
+  // Language tabs (per-language content)
+  'blogs.lang.label': { ru: 'Язык записи', uz: 'Yozuv tili', en: 'Post language' },
+  'blogs.lang.uz': { ru: 'Узбекский', uz: "O'zbekcha", en: 'Uzbek' },
+  'blogs.lang.ru': { ru: 'Русский', uz: 'Ruscha', en: 'Russian' },
+  'blogs.lang.en': { ru: 'Английский', uz: 'Inglizcha', en: 'English' },
+  'blogs.lang.uzHint': {
+    ru: 'Основной язык — заголовок и текст обязательны. Используется, если перевод не заполнен.',
+    uz: "Asosiy til — sarlavha va matn majburiy. Tarjima to'ldirilmasa, shu ishlatiladi.",
+    en: 'Primary language — title and body required. Used when a translation is left blank.',
+  },
+  'blogs.lang.fallbackHint': {
+    ru: 'Необязательно. Пустые поля в приложении заменяются узбекской версией.',
+    uz: "Ixtiyoriy. Bo'sh maydonlar ilovada o'zbekcha versiya bilan almashtiriladi.",
+    en: 'Optional. Blank fields fall back to the Uzbek version in the app.',
+  },
   // Editor
   'blogs.editor.create': { ru: 'Новая запись', uz: 'Yangi yozuv', en: 'New post' },
   'blogs.editor.edit': { ru: 'Редактирование записи', uz: 'Yozuvni tahrirlash', en: 'Edit post' },

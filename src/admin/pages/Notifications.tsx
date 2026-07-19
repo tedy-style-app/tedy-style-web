@@ -6,6 +6,18 @@ import { useAdminT } from '../i18n'
 const PAGE_SIZE = 20
 const AUDIENCES: NotifAudience[] = ['all', 'free', 'pro', 'max']
 
+// Destination picker — each option maps to the canonical deep-link the mobile
+// app routes. `none` sends no link; `custom` reveals the raw text input.
+const LINK_KINDS = ['none', 'aiChat', 'secondhand', 'pro', 'blogs', 'home', 'custom'] as const
+type LinkKind = (typeof LINK_KINDS)[number]
+const CANONICAL_LINK: Record<Exclude<LinkKind, 'none' | 'custom'>, string> = {
+  aiChat: 'sevil://ai-chat',
+  secondhand: 'sevil://secondhand',
+  pro: 'sevil://pro',
+  blogs: 'sevil://blogs',
+  home: 'sevil://home',
+}
+
 type LangCode = 'uz' | 'ru' | 'en'
 const LANGS: LangCode[] = ['uz', 'ru', 'en']
 type LangText = { title: string; body: string }
@@ -80,7 +92,8 @@ function Composer({ onSent }: { onSent: () => void }) {
   const t = useAdminT()
   const [lang, setLang] = useState<LangCode>('uz')
   const [text, setText] = useState<Record<LangCode, LangText>>(emptyText)
-  const [deepLink, setDeepLink] = useState('')
+  const [linkKind, setLinkKind] = useState<LinkKind>('none')
+  const [customLink, setCustomLink] = useState('')
   const [audience, setAudience] = useState<NotifAudience>('all')
   const [busy, setBusy] = useState(false)
   const [done, setDone] = useState('')
@@ -90,6 +103,13 @@ function Composer({ onSent }: { onSent: () => void }) {
   const setCur = (patch: Partial<LangText>) =>
     setText((prev) => ({ ...prev, [lang]: { ...prev[lang], ...patch } }))
   const filled = (l: LangCode) => text[l].title.trim() !== '' && text[l].body.trim() !== ''
+
+  // Resolve the picker selection into the canonical deep-link string (or undefined).
+  const resolveDeepLink = (): string | undefined => {
+    if (linkKind === 'none') return undefined
+    if (linkKind === 'custom') return customLink.trim() || undefined
+    return CANONICAL_LINK[linkKind]
+  }
 
   const send = async () => {
     if (busy) return
@@ -111,10 +131,11 @@ function Composer({ onSent }: { onSent: () => void }) {
         titleEn: text.en.title.trim() || undefined,
         bodyEn: text.en.body.trim() || undefined,
         audience,
-        deepLink: deepLink.trim() || undefined,
+        deepLink: resolveDeepLink(),
       })
       setText(emptyText())
-      setDeepLink('')
+      setLinkKind('none')
+      setCustomLink('')
       setLang('uz')
       setDone(t('notifications.sent', { n: n.sentCount }))
       onSent()
@@ -176,14 +197,35 @@ function Composer({ onSent }: { onSent: () => void }) {
           {lang === 'uz' ? t('notifications.lang.uzHint') : t('notifications.lang.fallbackHint')}
         </div>
 
-        <Field label={t('notifications.field.deepLink')}>
-          <input
-            value={deepLink}
-            onChange={(e) => setDeepLink(e.target.value)}
-            placeholder={t('notifications.field.deepLinkPlaceholder')}
-            className="w-full bg-transparent text-[14px] font-semibold text-ink outline-none placeholder:text-ink-3"
-          />
-        </Field>
+        <div>
+          <div className="mb-2 text-[11px] font-bold uppercase tracking-wide text-ink-3">{t('notifications.link.label')}</div>
+          <div className="flex flex-wrap gap-2">
+            {LINK_KINDS.map((k) => (
+              <button
+                key={k}
+                onClick={() => setLinkKind(k)}
+                className={`rounded-full px-3.5 py-1.5 text-[13px] font-extrabold transition-colors ${
+                  linkKind === k ? 'bg-espresso text-onEspresso' : 'border border-line bg-white text-ink-2'
+                }`}
+              >
+                {t('notifications.link.' + k)}
+              </button>
+            ))}
+          </div>
+          {linkKind === 'custom' && (
+            <div className="mt-2">
+              <Field label={t('notifications.field.deepLink')}>
+                <input
+                  value={customLink}
+                  onChange={(e) => setCustomLink(e.target.value)}
+                  placeholder={t('notifications.field.deepLinkPlaceholder')}
+                  className="w-full bg-transparent text-[14px] font-semibold text-ink outline-none placeholder:text-ink-3"
+                />
+              </Field>
+            </div>
+          )}
+          <div className="mt-1.5 text-[12px] font-medium text-ink-3">{t('notifications.link.hint')}</div>
+        </div>
 
         <div>
           <div className="mb-2 text-[11px] font-bold uppercase tracking-wide text-ink-3">{t('notifications.audienceLabel')}</div>

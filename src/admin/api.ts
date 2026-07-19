@@ -111,9 +111,37 @@ export interface Stats {
   buttonClicks: Slice[]
 }
 
+/** DAU / WAU / MAU time series for the activity modal. */
+export interface ActivitySeries {
+  dau: Point[]
+  wau: Point[]
+  mau: Point[]
+}
+
 export interface Paged<T> {
   items: T[]
   total: number
+}
+
+/** One row of the "who submitted what" personalization table. */
+export interface PersonalizationRow {
+  id: string
+  fullName: string
+  username: string | null
+  gender: string | null
+  country: string | null
+  city: string | null
+  region: string | null
+  colorSeason: string | null
+  bodyShape: string | null
+  favoriteColors: string[]
+  stylePersonas: string[]
+  painPoints: string[]
+  birthYear: number | null
+  heightCm: number | null
+  weightKg: number | null
+  hijab: boolean | null
+  createdAt: string
 }
 
 export interface UserRow {
@@ -200,10 +228,20 @@ export interface SendNotification {
 
 export interface AdminBlog {
   id: string
+  // Primary (Uzbek) content — always present; the app falls back to it.
   title: string
   excerpt: string
   contentMarkdown: string
   coverImageUrl: string | null
+  // Optional per-language overrides (null when not translated).
+  titleRu: string | null
+  excerptRu: string | null
+  contentMarkdownRu: string | null
+  coverImageUrlRu: string | null
+  titleEn: string | null
+  excerptEn: string | null
+  contentMarkdownEn: string | null
+  coverImageUrlEn: string | null
   authorName: string
   isPublished: boolean
   publishedAt: string | null
@@ -212,10 +250,20 @@ export interface AdminBlog {
 }
 
 export interface SaveBlog {
+  // Primary (Uzbek) content — required; also the fallback for blank translations.
   title: string
   excerpt?: string
   contentMarkdown: string
   coverImageUrl?: string
+  // Optional per-language overrides; omit to leave blank (app falls back to Uzbek).
+  titleRu?: string
+  excerptRu?: string
+  contentMarkdownRu?: string
+  coverImageUrlRu?: string
+  titleEn?: string
+  excerptEn?: string
+  contentMarkdownEn?: string
+  coverImageUrlEn?: string
   authorName?: string
   isPublished: boolean
 }
@@ -225,7 +273,28 @@ export interface SaveBlog {
 export const api = {
   login: (username: string, password: string) =>
     request<AuthResult>('/login', { method: 'POST', body: { username, password } }),
-  stats: () => request<Stats>('/stats'),
+  // Date range is optional; the backend defaults to the last 30 days.
+  // `users.growth` and `revenue.growth` then span [from, to].
+  stats: (from?: string, to?: string) => {
+    const p = new URLSearchParams()
+    if (from) p.set('from', from)
+    if (to) p.set('to', to)
+    const qs = p.toString()
+    return request<Stats>(`/stats${qs ? `?${qs}` : ''}`)
+  },
+  // DAU/WAU/MAU time series for the activity modal (same optional range).
+  activitySeries: (from?: string, to?: string) => {
+    const p = new URLSearchParams()
+    if (from) p.set('from', from)
+    if (to) p.set('to', to)
+    const qs = p.toString()
+    return request<ActivitySeries>(`/activity-series${qs ? `?${qs}` : ''}`)
+  },
+  // Per-user personalization answers ("who submitted what").
+  personalization: (search: string, page: number, pageSize = 20) =>
+    request<Paged<PersonalizationRow>>(
+      `/personalization?search=${encodeURIComponent(search)}&page=${page}&pageSize=${pageSize}`,
+    ),
   users: (search: string, page: number, pageSize = 20) =>
     request<Paged<UserRow>>(
       `/users?search=${encodeURIComponent(search)}&page=${page}&pageSize=${pageSize}`,

@@ -211,6 +211,10 @@ function RowAction({
 // Editor
 // ---------------------------------------------------------------------------
 
+type LangCode = 'uz' | 'ru' | 'en'
+const LANGS: LangCode[] = ['uz', 'ru', 'en']
+type LangContent = { title: string; excerpt: string; body: string; cover: string | null }
+
 function BlogEditor({
   editing,
   onSaved,
@@ -219,19 +223,38 @@ function BlogEditor({
   onSaved: (saved: AdminBlog, wasCreate: boolean) => void
 }) {
   const t = useAdminT()
-  const [title, setTitle] = useState(editing?.title ?? '')
-  const [excerpt, setExcerpt] = useState(editing?.excerpt ?? '')
+  // Per-language content. Uzbek is primary (falls back for blank translations).
+  const [content, setContent] = useState<Record<LangCode, LangContent>>(() => ({
+    uz: {
+      title: editing?.title ?? '',
+      excerpt: editing?.excerpt ?? '',
+      body: editing?.contentMarkdown ?? '',
+      cover: editing?.coverImageUrl ?? null,
+    },
+    ru: {
+      title: editing?.titleRu ?? '',
+      excerpt: editing?.excerptRu ?? '',
+      body: editing?.contentMarkdownRu ?? '',
+      cover: editing?.coverImageUrlRu ?? null,
+    },
+    en: {
+      title: editing?.titleEn ?? '',
+      excerpt: editing?.excerptEn ?? '',
+      body: editing?.contentMarkdownEn ?? '',
+      cover: editing?.coverImageUrlEn ?? null,
+    },
+  }))
+  // Author and publish state are shared across languages.
   const [author, setAuthor] = useState(editing?.authorName ?? '')
-  const [body, setBody] = useState(editing?.contentMarkdown ?? '')
-  const [cover, setCover] = useState<string | null>(editing?.coverImageUrl ?? null)
   const [isPublished, setIsPublished] = useState(editing?.isPublished ?? false)
+  const [lang, setLang] = useState<LangCode>('uz')
   const [tab, setTab] = useState<'write' | 'preview'>('write')
 
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
   const [error, setError] = useState('')
 
-  // Cover upload state.
+  // Cover upload state (one crop at a time; applies to the active language).
   const [cropSrc, setCropSrc] = useState<string | null>(null)
   const [coverBusy, setCoverBusy] = useState(false)
   const [coverError, setCoverError] = useState('')
@@ -239,6 +262,14 @@ function BlogEditor({
   const bodyRef = useRef<HTMLTextAreaElement>(null)
 
   const isCreate = editing === null
+  const cur = content[lang]
+  const setCur = (patch: Partial<LangContent>) =>
+    setContent((prev) => ({ ...prev, [lang]: { ...prev[lang], ...patch } }))
+  // A translation "has content" once its title or body is filled.
+  const hasContent = (l: LangCode) =>
+    content[l].title.trim() !== '' || content[l].body.trim() !== ''
+
+  const body = cur.body
   const previewHtml = useMemo(
     () => (body.trim() ? (marked(body, { async: false }) as string) : ''),
     [body],
@@ -247,14 +278,14 @@ function BlogEditor({
   const insert = (before: string, after = '', placeholder = '') => {
     const ta = bodyRef.current
     if (!ta) {
-      setBody((b) => b + before + placeholder + after)
+      setCur({ body: body + before + placeholder + after })
       return
     }
     const start = ta.selectionStart
     const end = ta.selectionEnd
     const selected = body.slice(start, end) || placeholder
     const next = body.slice(0, start) + before + selected + after + body.slice(end)
-    setBody(next)
+    setCur({ body: next })
     requestAnimationFrame(() => {
       ta.focus()
       const pos = start + before.length
@@ -275,9 +306,11 @@ function BlogEditor({
   const onCropDone = async (blob: Blob) => {
     setCoverBusy(true)
     setCoverError('')
+    // Capture the target language so a late upload lands on the right cover.
+    const target = lang
     try {
       const { url } = await uploadBlogImage(blob)
-      setCover(url)
+      setContent((prev) => ({ ...prev, [target]: { ...prev[target], cover: url } }))
       setCropSrc(null)
     } catch {
       setCoverError(t('blogs.cover.error'))
@@ -288,19 +321,29 @@ function BlogEditor({
 
   const save = async () => {
     if (saving) return
-    if (title.trim() === '' || body.trim() === '') {
+    // Only Uzbek (primary) is required; translations are optional.
+    if (content.uz.title.trim() === '' || content.uz.body.trim() === '') {
+      setLang('uz')
       setError(t('blogs.error.required'))
       return
     }
     setError('')
     setSaving(true)
     const payload: SaveBlog = {
-      title: title.trim(),
-      excerpt: excerpt.trim() || undefined,
-      contentMarkdown: body,
-      coverImageUrl: cover ?? undefined,
+      title: content.uz.title.trim(),
+      excerpt: content.uz.excerpt.trim() || undefined,
+      contentMarkdown: content.uz.body,
+      coverImageUrl: content.uz.cover ?? undefined,
       authorName: author.trim() || undefined,
       isPublished,
+      titleRu: content.ru.title.trim() || undefined,
+      excerptRu: content.ru.excerpt.trim() || undefined,
+      contentMarkdownRu: content.ru.body.trim() ? content.ru.body : undefined,
+      coverImageUrlRu: content.ru.cover ?? undefined,
+      titleEn: content.en.title.trim() || undefined,
+      excerptEn: content.en.excerpt.trim() || undefined,
+      contentMarkdownEn: content.en.body.trim() ? content.en.body : undefined,
+      coverImageUrlEn: content.en.cover ?? undefined,
     }
     try {
       const result = isCreate
@@ -316,7 +359,7 @@ function BlogEditor({
     }
   }
 
-  const coverUrl = resolveUrl(cover)
+  const coverUrl = resolveUrl(cur.cover)
 
   return (
     <Card
@@ -325,10 +368,36 @@ function BlogEditor({
       action={saved ? <span className="text-[13px] font-extrabold text-online">{t('blogs.saved')}</span> : undefined}
     >
       <div className="flex flex-col gap-3">
+        {/* Language tabs */}
+        <div>
+          <div className="mb-2 text-[11px] font-bold uppercase tracking-wide text-ink-3">{t('blogs.lang.label')}</div>
+          <div className="flex flex-wrap gap-2">
+            {LANGS.map((l) => (
+              <button
+                key={l}
+                onClick={() => setLang(l)}
+                className={`flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[13px] font-extrabold transition-colors ${
+                  lang === l ? 'bg-espresso text-onEspresso' : 'border border-line bg-white text-ink-2'
+                }`}
+              >
+                {t('blogs.lang.' + l)}
+                {l === 'uz' ? (
+                  <span className="opacity-70">*</span>
+                ) : (
+                  hasContent(l) && <span className="h-1.5 w-1.5 rounded-full bg-online" />
+                )}
+              </button>
+            ))}
+          </div>
+          <div className="mt-1.5 text-[12px] font-medium text-ink-3">
+            {lang === 'uz' ? t('blogs.lang.uzHint') : t('blogs.lang.fallbackHint')}
+          </div>
+        </div>
+
         <Field label={t('blogs.field.title')}>
           <input
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            value={cur.title}
+            onChange={(e) => setCur({ title: e.target.value })}
             placeholder={t('blogs.field.titlePlaceholder')}
             className="w-full bg-transparent text-[15px] font-semibold text-ink outline-none placeholder:text-ink-3"
           />
@@ -336,24 +405,15 @@ function BlogEditor({
 
         <Field label={t('blogs.field.excerpt')}>
           <textarea
-            value={excerpt}
-            onChange={(e) => setExcerpt(e.target.value)}
+            value={cur.excerpt}
+            onChange={(e) => setCur({ excerpt: e.target.value })}
             rows={2}
             placeholder={t('blogs.field.excerptPlaceholder')}
             className="w-full resize-y bg-transparent text-[14px] font-medium leading-relaxed text-ink outline-none placeholder:text-ink-3"
           />
         </Field>
 
-        <Field label={t('blogs.field.author')}>
-          <input
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
-            placeholder={t('blogs.field.authorPlaceholder')}
-            className="w-full bg-transparent text-[14px] font-semibold text-ink outline-none placeholder:text-ink-3"
-          />
-        </Field>
-
-        {/* Cover image */}
+        {/* Cover image (per-language) */}
         <div>
           <div className="mb-1.5 text-[11px] font-bold uppercase tracking-wide text-ink-3">{t('blogs.field.cover')}</div>
           {coverUrl && (
@@ -373,7 +433,7 @@ function BlogEditor({
             </button>
             {coverUrl && (
               <button
-                onClick={() => setCover(null)}
+                onClick={() => setCur({ cover: null })}
                 className="rounded-full border border-like/40 bg-white px-4 py-2 text-[13px] font-extrabold text-like transition-colors hover:bg-like/10"
               >
                 {t('blogs.cover.remove')}
@@ -409,8 +469,8 @@ function BlogEditor({
               <Toolbar t={t} insert={insert} />
               <textarea
                 ref={bodyRef}
-                value={body}
-                onChange={(e) => setBody(e.target.value)}
+                value={cur.body}
+                onChange={(e) => setCur({ body: e.target.value })}
                 spellCheck={false}
                 rows={14}
                 placeholder={t('blogs.field.bodyPlaceholder')}
@@ -428,6 +488,16 @@ function BlogEditor({
             </div>
           )}
         </div>
+
+        {/* Author — shared across languages */}
+        <Field label={t('blogs.field.author')}>
+          <input
+            value={author}
+            onChange={(e) => setAuthor(e.target.value)}
+            placeholder={t('blogs.field.authorPlaceholder')}
+            className="w-full bg-transparent text-[14px] font-semibold text-ink outline-none placeholder:text-ink-3"
+          />
+        </Field>
 
         {/* Publish toggle */}
         <button

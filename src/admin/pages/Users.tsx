@@ -1,14 +1,44 @@
 import { useEffect, useState } from 'react'
-import { api, resolveUrl, type UserRow, type UserDetail } from '../api'
-import { PageHeader, Spinner, ErrorState, EmptyState, Table, Pager, Badge, fmtDate } from '../ui'
-import { useAdminT } from '../i18n'
+import { api, resolveUrl, type Stats, type UserRow, type UserDetail } from '../api'
+import { Card, PageHeader, Spinner, ErrorState, EmptyState, Table, Pager, Badge, fmtDate } from '../ui'
+import { BarList } from '../charts'
+import { useAdminT, type AdminT } from '../i18n'
 
 const PAGE_SIZE = 20
 const planTone = (p: string) =>
   p?.toUpperCase() === 'MAX' ? 'gold' : p?.toUpperCase() === 'PRO' ? 'espresso' : 'neutral'
 
+type Tab = 'list' | 'auditory'
+
 export default function Users() {
   const t = useAdminT()
+  const [tab, setTab] = useState<Tab>('list')
+
+  return (
+    <div>
+      <PageHeader title={t('users.title')} subtitle={t('users.subtitle')} />
+
+      {/* Tab strip (active-pill) */}
+      <div className="mb-5 inline-flex gap-1 rounded-full border border-line bg-white p-1">
+        {(['list', 'auditory'] as Tab[]).map((k) => (
+          <button
+            key={k}
+            onClick={() => setTab(k)}
+            className={`rounded-full px-4 py-1.5 text-[13px] font-extrabold transition-colors ${
+              tab === k ? 'bg-espresso text-onEspresso' : 'text-ink-2 hover:text-ink'
+            }`}
+          >
+            {t('users.tab.' + k)}
+          </button>
+        ))}
+      </div>
+
+      {tab === 'list' ? <UsersList t={t} /> : <Auditory t={t} />}
+    </div>
+  )
+}
+
+function UsersList({ t }: { t: AdminT }) {
   const [search, setSearch] = useState('')
   const [query, setQuery] = useState('')
   const [page, setPage] = useState(1)
@@ -38,23 +68,18 @@ export default function Users() {
 
   return (
     <div>
-      <PageHeader
-        title={t('users.title')}
-        subtitle={t('common.total', { n: total.toLocaleString('ru-RU') })}
-        action={
-          <form onSubmit={onSearch} className="flex items-center gap-2">
-            <input
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder={t('users.searchPlaceholder')}
-              className="w-[240px] rounded-full border border-line bg-white px-4 py-2 text-[14px] font-semibold text-ink outline-none focus:border-gold-soft"
-            />
-            <button className="rounded-full bg-grad-espresso px-4 py-2 text-[13px] font-extrabold text-onEspresso shadow-glow-soft">
-              {t('users.searchButton')}
-            </button>
-          </form>
-        }
-      />
+      <form onSubmit={onSearch} className="mb-5 flex items-center gap-2">
+        <input
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder={t('users.searchPlaceholder')}
+          className="w-[240px] rounded-full border border-line bg-white px-4 py-2 text-[14px] font-semibold text-ink outline-none focus:border-gold-soft"
+        />
+        <button className="rounded-full bg-grad-espresso px-4 py-2 text-[13px] font-extrabold text-onEspresso shadow-glow-soft">
+          {t('users.searchButton')}
+        </button>
+        <span className="text-[13px] font-bold text-ink-3">{t('common.total', { n: total.toLocaleString('ru-RU') })}</span>
+      </form>
 
       {state === 'loading' && <Spinner />}
       {state === 'error' && <ErrorState onRetry={load} />}
@@ -89,6 +114,41 @@ export default function Users() {
         ))}
 
       {selected && <UserDrawer id={selected} onClose={() => setSelected(null)} />}
+    </div>
+  )
+}
+
+/** Audience breakdown: gender, region and age distributions from /stats. */
+function Auditory({ t }: { t: AdminT }) {
+  const [data, setData] = useState<Stats | null>(null)
+  const [state, setState] = useState<'loading' | 'error' | 'ready'>('loading')
+
+  const load = () => {
+    setState('loading')
+    api
+      .stats()
+      .then((s) => {
+        setData(s)
+        setState('ready')
+      })
+      .catch(() => setState('error'))
+  }
+  useEffect(load, [])
+
+  if (state === 'loading') return <Spinner />
+  if (state === 'error' || !data) return <ErrorState onRetry={load} />
+
+  return (
+    <div className="grid gap-4 lg:grid-cols-2">
+      <Card title={t('dashboard.chart.gender')}>
+        <BarList data={data.personalization?.gender ?? []} color="#3E322A" />
+      </Card>
+      <Card title={t('dashboard.chart.region')}>
+        <BarList data={data.personalization?.region ?? []} color="#8C6E52" />
+      </Card>
+      <Card title={t('dashboard.chart.age')} className="lg:col-span-2">
+        <BarList data={data.age ?? []} color="#5B9E5E" />
+      </Card>
     </div>
   )
 }
