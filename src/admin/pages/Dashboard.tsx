@@ -46,33 +46,8 @@ export default function Dashboard() {
     <div>
       <PageHeader title={t('dashboard.title')} subtitle={t('dashboard.subtitle')} />
 
-      {/* Top summary cards (revenue / paid / free) */}
-      <div className="grid grid-cols-2 gap-4 lg:grid-cols-3">
-        <StatCard
-          label={t('dashboard.stat.revenue')}
-          value={fmtMoney(s.revenue.total, s.revenue.currency)}
-          delta={t('dashboard.txnCountDelta', { n: s.revenue.count })}
-          spark={s.revenue.growth}
-        />
-        <StatCard
-          label={t('dashboard.stat.paidSubs')}
-          value={(s.plans.pro + s.plans.max).toLocaleString('ru-RU')}
-          delta={`PRO ${s.plans.pro} · MAX ${s.plans.max}`}
-        />
-        <StatCard label={t('dashboard.stat.free')} value={s.plans.free.toLocaleString('ru-RU')} />
-      </div>
-
-      {/* ── Section 1 — User growth ─────────────────────────────── */}
-      <h2 className="mb-3 mt-8 text-[17px] font-black text-ink">{t('dashboard.section.growth')}</h2>
-      <Card
-        title={t('dashboard.chart.userGrowth')}
-        action={<DateRange days={days} onChange={changeRange} />}
-      >
-        <LineChart data={s.users.growth} height={200} />
-      </Card>
-
-      {/* ── Section 2 — Users count · activity · retention ──────── */}
-      <h2 className="mb-3 mt-8 text-[17px] font-black text-ink">{t('dashboard.section.audience')}</h2>
+      {/* ── Section 1 — Users count · activity · retention ──────── */}
+      <h2 className="mb-3 mt-2 text-[17px] font-black text-ink">{t('dashboard.section.audience')}</h2>
       <div className="grid gap-4 lg:grid-cols-3">
         {/* Users count */}
         <Card title={t('dashboard.usersCount')}>
@@ -131,9 +106,32 @@ export default function Dashboard() {
         </Card>
       </div>
 
-      {/* ── Section 3 — Subscriptions & transactions ───────────── */}
+      {/* ── Section 2 — User growth ─────────────────────────────── */}
+      <h2 className="mb-3 mt-8 text-[17px] font-black text-ink">{t('dashboard.section.growth')}</h2>
+      <Card
+        title={t('dashboard.chart.userGrowth')}
+        action={<DateRange days={days} onChange={changeRange} />}
+      >
+        <LineChart data={s.users.growth} height={200} />
+      </Card>
+
+      {/* ── Section 3 — Revenue · subscriptions · transactions ──── */}
       <h2 className="mb-3 mt-8 text-[17px] font-black text-ink">{t('dashboard.section.money')}</h2>
-      <div className="grid gap-4 lg:grid-cols-2">
+      <div className="grid grid-cols-2 gap-4 lg:grid-cols-3">
+        <StatCard
+          label={t('dashboard.stat.revenue')}
+          value={fmtMoney(s.revenue.total, s.revenue.currency)}
+          delta={t('dashboard.txnCountDelta', { n: s.revenue.count })}
+          spark={s.revenue.growth}
+        />
+        <StatCard
+          label={t('dashboard.stat.paidSubs')}
+          value={(s.plans.pro + s.plans.max).toLocaleString('ru-RU')}
+          delta={`PRO ${s.plans.pro} · MAX ${s.plans.max}`}
+        />
+        <StatCard label={t('dashboard.stat.free')} value={s.plans.free.toLocaleString('ru-RU')} />
+      </div>
+      <div className="mt-4 grid gap-4 lg:grid-cols-2">
         <Card title={t('dashboard.chart.subscriptions')}>
           <Donut
             segments={[
