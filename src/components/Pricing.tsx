@@ -56,6 +56,13 @@ function PlanCard({ plan, cta }: { plan: Plan; cta: string }) {
             {plan.priceUnit}
           </span>
         )}
+        {plan.priceOld && (
+          <span
+            className={`text-[16px] font-bold line-through ${hi ? 'text-onEspresso/45' : 'text-ink-3'}`}
+          >
+            {plan.priceOld}
+          </span>
+        )}
       </div>
       {plan.priceNote && (
         <p className={`mt-1.5 text-[12px] font-semibold ${hi ? 'text-gold-soft' : 'text-ink-3'}`}>
