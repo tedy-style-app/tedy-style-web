@@ -249,6 +249,94 @@ export interface AdminBlog {
   updatedAt: string | null
 }
 
+// ---- AI Usage -----------------------------------------------------------
+
+/** One row of the AI-usage table (light — no prompt/payloads). */
+export interface AiUsageRow {
+  id: string
+  createdAt: string
+  provider: string
+  model: string
+  operation: string
+  status: number // 1 Success | 2 Failed | 3 Rejected
+  totalTokens: number | null
+  inputTokens: number | null
+  outputTokens: number | null
+  estimatedCostUsd: number | null
+  durationMs: number
+  triggeredByUserId: string | null
+  userName: string | null
+  hasError: boolean
+}
+
+/** Full AI-usage audit record for the detail drawer. */
+export interface AiUsageDetail extends AiUsageRow {
+  textTokens: number | null
+  imageTokens: number | null
+  startedAt: string
+  finishedAt: string
+  context: string | null
+  error: string | null
+  prompt: string | null
+  requestParams: string | null // raw JSON string
+  responsePayload: string | null // raw JSON string
+  inputImageUrls: string[]
+  outputImageUrls: string[]
+}
+
+export interface AiUsageFilters {
+  provider?: string
+  model?: string
+  operation?: string
+  status?: number
+  userId?: string
+  search?: string
+  from?: string
+  to?: string
+}
+
+export interface AiCostPoint {
+  date: string
+  cost: number
+  calls: number
+}
+export interface AiProviderSlice {
+  provider: string
+  calls: number
+  costUsd: number
+}
+export interface AiOperationSlice {
+  operation: string
+  calls: number
+  costUsd: number
+}
+
+/** Filter-aware aggregates for the AI-usage cards + charts. */
+export interface AiUsageSummary {
+  totalCalls: number
+  successCount: number
+  failedCount: number
+  totalTokens: number
+  totalCostUsd: number
+  costOverTime: AiCostPoint[]
+  byProvider: AiProviderSlice[]
+  byOperation: AiOperationSlice[]
+}
+
+/** Shared query-string builder for the AI-usage list + summary endpoints. */
+function aiUsageParams(filters: AiUsageFilters): URLSearchParams {
+  const p = new URLSearchParams()
+  if (filters.provider) p.set('provider', filters.provider)
+  if (filters.model) p.set('model', filters.model)
+  if (filters.operation) p.set('operation', filters.operation)
+  if (filters.status != null) p.set('status', String(filters.status))
+  if (filters.userId) p.set('userId', filters.userId)
+  if (filters.search) p.set('search', filters.search)
+  if (filters.from) p.set('from', filters.from)
+  if (filters.to) p.set('to', filters.to)
+  return p
+}
+
 export interface SaveBlog {
   // Primary (Uzbek) content — required; also the fallback for blank translations.
   title: string
@@ -328,6 +416,18 @@ export const api = {
   publishBlog: (id: string, isPublished: boolean) =>
     request<AdminBlog>(`/blogs/${id}/publish`, { method: 'PATCH', body: { isPublished } }),
   deleteBlog: (id: string) => request<void>(`/blogs/${id}`, { method: 'DELETE' }),
+  // AI usage audit: paged list, single detail, and filter-aware aggregates.
+  aiUsage: (page: number, filters: AiUsageFilters = {}, pageSize = 20) => {
+    const p = aiUsageParams(filters)
+    p.set('page', String(page))
+    p.set('pageSize', String(pageSize))
+    return request<Paged<AiUsageRow>>(`/ai-usage?${p.toString()}`)
+  },
+  aiUsageDetail: (id: string) => request<AiUsageDetail>(`/ai-usage/${id}`),
+  aiUsageSummary: (filters: AiUsageFilters = {}) => {
+    const qs = aiUsageParams(filters).toString()
+    return request<AiUsageSummary>(`/ai-usage/summary${qs ? `?${qs}` : ''}`)
+  },
 }
 
 /**
