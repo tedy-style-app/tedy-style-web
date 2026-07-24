@@ -222,3 +222,18 @@ export const fmtDate = (iso: string) => {
 }
 export const fmtMoney = (n: number, currency = 'UZS') =>
   `${n.toLocaleString('ru-RU')} ${currency}`
+
+/** ISO date -> short local date + time string (adds hour/minute to fmtDate). */
+export const fmtDateTime = (iso: string) => {
+  try {
+    return new Date(iso).toLocaleString('ru-RU', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    })
+  } catch {
+    return iso
+  }
+}

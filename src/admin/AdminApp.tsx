@@ -8,6 +8,7 @@ import Users from './pages/Users'
 import Clicks from './pages/Clicks'
 import Personalization from './pages/Personalization'
 import Transactions from './pages/Transactions'
+import AiUsage from './pages/AiUsage'
 import Support from './pages/Support'
 import Notifications from './pages/Notifications'
 import Blogs from './pages/Blogs'
@@ -19,6 +20,7 @@ type Section =
   | 'personalization'
   | 'clicks'
   | 'transactions'
+  | 'aiUsage'
   | 'support'
   | 'notifications'
   | 'blogs'
@@ -30,6 +32,7 @@ const NAV: { key: Section; icon: string }[] = [
   { key: 'personalization', icon: '🎨' },
   { key: 'clicks', icon: '🖱' },
   { key: 'transactions', icon: '▤' },
+  { key: 'aiUsage', icon: '🤖' },
   { key: 'support', icon: '✉' },
   { key: 'notifications', icon: '🔔' },
   { key: 'blogs', icon: '📝' },
@@ -160,6 +163,7 @@ export default function AdminApp() {
           {section === 'personalization' && <Personalization />}
           {section === 'clicks' && <Clicks />}
           {section === 'transactions' && <Transactions />}
+          {section === 'aiUsage' && <AiUsage />}
           {section === 'support' && <Support />}
           {section === 'notifications' && <Notifications />}
           {section === 'blogs' && <Blogs />}
