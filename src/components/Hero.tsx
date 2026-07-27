@@ -1,6 +1,5 @@
 import Reveal from './Reveal'
 import StoreBadges from './StoreBadges'
-import Phone, { HomeScreen } from './Phone'
 import { useLang } from '../i18n'
 
 export default function Hero() {
@@ -39,9 +38,12 @@ export default function Hero() {
         </Reveal>
 
         <Reveal delay={1} className="flex justify-center">
-          <Phone nav="home">
-            <HomeScreen />
-          </Phone>
+          <img
+            src="/hero-app.png"
+            alt="Sevil — your look for today"
+            className="w-full max-w-[380px] [filter:drop-shadow(0_28px_55px_rgba(62,50,42,0.22))]"
+            loading="eager"
+          />
         </Reveal>
       </div>
     </section>

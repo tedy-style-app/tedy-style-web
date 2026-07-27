@@ -1,5 +1,4 @@
 import Reveal from './Reveal'
-import Phone, { SecondhandScreen } from './Phone'
 import { useLang } from '../i18n'
 
 export default function Secondhand() {
@@ -8,9 +7,12 @@ export default function Secondhand() {
     <section className="bg-cream py-24" id="secondhand">
       <div className="mx-auto grid w-full max-w-[1140px] items-center gap-14 px-6 lg:grid-cols-2">
         <Reveal className="flex justify-center">
-          <Phone nav="secondhand" small>
-            <SecondhandScreen />
-          </Phone>
+          <img
+            src="/secondhand-app.png"
+            alt="Sevil — Secondhand"
+            className="w-full max-w-[340px] [filter:drop-shadow(0_28px_55px_rgba(62,50,42,0.22))]"
+            loading="lazy"
+          />
         </Reveal>
 
         <Reveal delay={1} className="text-center lg:text-left">
