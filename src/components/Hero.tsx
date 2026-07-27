@@ -3,7 +3,7 @@ import StoreBadges from './StoreBadges'
 import { useLang } from '../i18n'
 
 export default function Hero() {
-  const { t } = useLang()
+  const { t, lang } = useLang()
 
   return (
     <section className="relative overflow-hidden pb-[88px] pt-[72px]" id="top">
@@ -39,7 +39,8 @@ export default function Hero() {
 
         <Reveal delay={1} className="flex justify-center">
           <img
-            src="/hero-app.png"
+            key={lang}
+            src={`/hero-app-${lang}.png`}
             alt="Sevil — your look for today"
             className="w-full max-w-[380px] [filter:drop-shadow(0_28px_55px_rgba(62,50,42,0.22))]"
             loading="eager"
