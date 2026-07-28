@@ -2,13 +2,14 @@ import Reveal from './Reveal'
 import { useLang } from '../i18n'
 
 export default function Secondhand() {
-  const { t } = useLang()
+  const { t, lang } = useLang()
   return (
     <section className="bg-cream py-24" id="secondhand">
       <div className="mx-auto grid w-full max-w-[1140px] items-center gap-14 px-6 lg:grid-cols-2">
         <Reveal className="flex justify-center">
           <img
-            src="/secondhand-app.png"
+            key={lang}
+            src={`/secondhand-app-${lang}.png`}
             alt="Sevil — Secondhand"
             className="w-full max-w-[340px] [filter:drop-shadow(0_28px_55px_rgba(62,50,42,0.22))]"
             loading="lazy"
